@@ -1,53 +1,56 @@
-# Development Guide
+# Guía de Desarrollo
 
-This guide provides step-by-step instructions for setting up the development environment and running tests for the LTI ATS system.
+Esta guía proporciona instrucciones paso a paso para configurar el entorno de desarrollo y ejecutar pruebas para el proyecto final de Máster AI4Devs.
 
-## 🚀 Setup Instructions
+## 🚀 Instrucciones de Configuración
 
-### Prerequisites
+### Prerequisitos
 
-Ensure you have the following installed:
-- **Node.js** (v16 or higher)
-- **npm** (v8 or higher)
-- **Docker** and **Docker Compose**
+Asegúrate de tener instalado lo siguiente:
+
+- **Node.js** (v16 o superior)
+- **npm** (v8 o superior)
+- **Docker** y **Docker Compose**
 - **Git**
 
-### 1. Clone the Repository
+### 1. Clonar el Repositorio
 
 ```bash
-git clone git@github.com:LIDR-academy/AI4Devs-LTI-extended.git
-cd AI4Devs-LTI-extended
+git clone git@github.com:SValduezaL/AI4Devs-finalproject
+cd AI4Devs-finalproject
 ```
 
-### 2. Environment Configuration
+### 2. Configuración de Entorno
 
-Create environment files for both backend and frontend:
+Crear archivos de entorno para backend y frontend:
 
-**Backend Environment** (`backend/.env`):
+**Entorno de Backend** (`backend/.env`):
+
 ```env
 # Database Configuration
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=LTIdbUser
-DB_PASSWORD=D1ymf8wyQEGthFR1E9xhCq
-DB_NAME=LTIdb
+DB_HOST = localhost
+DB_PORT = 5433
+DB_USER = SValduezaL
+DB_PASSWORD = mypassword
+DB_NAME = AI4Devs_FinalProject_db
 
 # Application Configuration
-PORT=3000
-NODE_ENV=development
+PORT = 3000
+NODE_ENV = development
 
 # Prisma Database URL
-DATABASE_URL="postgresql://LTIdbUser:D1ymf8wyQEGthFR1E9xhCq@localhost:5432/LTIdb"
+DATABASE_URL = "postgresql://SValduezaL:mypassword@localhost:5433/DB_NAME = AI4Devs_FinalProject_db"
 ```
 
-**Frontend Environment** (`frontend/.env`):
+**Entorno de Frontend** (`frontend/.env`):
+
 ```env
-REACT_APP_API_URL=http://localhost:3000
+REACT_APP_API_URL = http://localhost:3000
 ```
 
-### 3. Database Setup (PostgreSQL with Docker)
+### 3. Configuración de Base de Datos (PostgreSQL con Docker)
 
-Start the PostgreSQL database using Docker Compose:
+Iniciar la base de datos PostgreSQL usando Docker Compose:
 
 ```bash
 # Start PostgreSQL container
@@ -57,14 +60,15 @@ docker-compose up -d
 docker-compose ps
 ```
 
-The PostgreSQL database will be available at:
-- **Host**: `localhost`
-- **Port**: `5432`
-- **Database**: `LTIdb`
-- **Username**: `LTIdbUser`
-- **Password**: `D1ymf8wyQEGthFR1E9xhCq`
+La base de datos PostgreSQL estará disponible en:
 
-### 4. Backend Setup
+- **Host**: `localhost`
+- **Port**: `5433`
+- **Database**: `AI4Devs_FinalProject_db`
+- **Username**: `SValduezaL`
+- **Password**: `mypassword`
+
+### 4. Configuración de Backend
 
 ```bash
 # Navigate to backend directory
@@ -86,9 +90,9 @@ npx prisma db seed
 npm run dev
 ```
 
-The backend API will be available at `http://localhost:3000`
+La API de backend estará disponible en `http://localhost:3000`
 
-### 5. Frontend Setup
+### 5. Configuración de Frontend
 
 ```bash
 # Navigate to frontend directory (from project root)
@@ -101,27 +105,27 @@ npm install
 npm start
 ```
 
-The frontend application will be available at `http://localhost:3001`
+La aplicación frontend estará disponible en `http://localhost:3001`
 
-### 6. Cypress Testing Suite Setup
+### 6. Configuración de Suite de Pruebas Playwright
 
 ```bash
 # From the frontend directory
 cd frontend
 
-# Install Cypress (if not already installed)
+# Install Playwright (if not already installed)
 npm install
 
-# Open Cypress Test Runner (Interactive)
-npm run cypress:open
+# Open Playwright Test Runner (Interactive)
+npm run playwright:open
 
 # Or run tests headlessly
-npm run cypress:run
+npm run playwright:run
 ```
 
-## 🧪 Testing
+## 🧪 Pruebas
 
-### Backend Testing
+### Pruebas de Backend
 
 ```bash
 cd backend
@@ -136,7 +140,7 @@ npm run test:watch
 npm run test:coverage
 ```
 
-### Frontend Testing
+### Pruebas de Frontend
 
 ```bash
 cd frontend
@@ -144,10 +148,9 @@ cd frontend
 # Run unit tests
 npm test
 
-# Run E2E tests with Cypress
-npm run cypress:run
+# Run E2E tests with Playwright
+npm run playwright:run
 
-# Open Cypress Test Runner
-npm run cypress:open
+# Open Playwright Test Runner
+npm run playwright:open
 ```
-

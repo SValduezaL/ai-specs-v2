@@ -1,12 +1,12 @@
-Please analyze and fix the Jira ticket: $ARGUMENTS.
+Analiza y soluciona el siguiente ticket: $ARGUMENTS.
 
-Follow these steps:
+Sigue estos pasos:
 
-1. Use Jira MCP to get the ticket details, whether it is the ticket id/number, keywords referring to the ticket or indicating status, like "the one in progress"
-2. You will act as a product expert with technical knowledge
-3. Understand the problem described in the ticket
-4. Decide whether or not the User Story is completely detailed according to product's best practices: Include a full description of the functionality, a comprehensive list of fields to be updated, the structure and URLs of the necessary endpoints, the files to be modified according to the architecture and best practices, the steps required for the task to be considered complete, how to update any relevant documentation or create unit tests, and non-functional requirements related to security, performance, etc
-5. If the user story lacks the technical and specific detail necessary to allow the developer to be fully autonomous when completing it, provide an improved story that is clearer, more specific, and more concise in line with product best practices described in step 4. Use the technical context you will find in 
-@documentation. Return it in markdown format.
-6. Update ticket in Jira, adding the new content after the old one and marking each section with the h2 tags [original] and [enhanced]. Apply proper formatting to make it readable and visually clear, using appropriate text types (lists, code snippets...).
-7. If the ticket status was "To refine", move the task to the "Pending refinement validation" column.
+1. Si tienes instalado MCP de Jira, úsalo para obtener los detalles del ticket, ya sea el id/número del ticket, palabras clave que se refieren al ticket o indican estado, como "el que está en progreso"
+2. Actuarás como un experto de producto con conocimiento técnico
+3. Entiende el problema descrito en el ticket
+4. Decide si la Historia de Usuario está completamente detallada según las mejores prácticas del producto: Incluir una descripción completa de la funcionalidad, una lista exhaustiva de campos a actualizar, la estructura y URLs de los endpoints necesarios, los archivos a modificar según la arquitectura y mejores prácticas, los pasos requeridos para que la tarea se considere completa, cómo actualizar cualquier documentación relevante o crear pruebas unitarias, y requisitos no funcionales relacionados con seguridad, rendimiento, etc
+5. Si la historia de usuario carece del detalle técnico y específico necesario para permitir que el desarrollador sea completamente autónomo al completarla, proporciona una historia mejorada que sea más clara, más específica y más concisa en línea con las mejores prácticas de producto descritas en el paso 4. Usa el contexto técnico que encontrarás en
+   @memory_bank. Devuélvela en formato markdown.
+6. Si tienes instalado MCP de Jira, actualiza el ticket en Jira, agregando el nuevo contenido después del antiguo y marcando cada sección con las etiquetas h2 [original] y [enhanced]. Aplica formato apropiado para hacerlo legible y visualmente claro, usando tipos de texto apropiados (listas, fragmentos de código...).
+7. Si el estado del ticket era "To refine", mueve la tarea a la columna "Pending refinement validation".

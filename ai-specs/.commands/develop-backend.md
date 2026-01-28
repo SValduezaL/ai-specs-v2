@@ -1,13 +1,14 @@
-Please analyze and fix the Jira ticket: $ARGUMENTS.
+Por favor analiza y soluciona el ticket: $ARGUMENTS.
 
-Follow these steps:
+Sigue estos pasos:
 
-1. Understand the problem described in the ticket
-2. Search the codebase for relevant files
-3. Start a new branch using the ID of the ticket (for example SCRUM-1)
-4. Implement the necessary changes to solve the ticket, following the order of the different tasks and making sure you accomplish all of them in order, like writing and running tests to verify the solution, updating documentation, etc.
-5. Ensure code passes linting and type checking
-6. Stage only the files affected by the ticket, and leave any other file changed out of the commit. Create a descriptive commit message
-7. Push and create a PR, using the ID of the ticket (for example SCRUM-1) so it gets linked in Jira ticket
+1. Entiende el problema descrito en el ticket
+2. Busca en el código base los archivos relevantes
+3. Inicia una nueva rama usando el ID del ticket (por ejemplo SCRUM-1)
+4. Implementa los cambios necesarios para resolver el ticket, siguiendo el orden de las diferentes tareas y asegurándote de cumplir todas ellas en orden, como escribir y ejecutar pruebas para verificar la solución, actualizar documentación, etc.
+5. Asegura que el código pase linting y verificación de tipos
+6. Haz stage solo de los archivos afectados por el ticket, y deja cualquier otro archivo cambiado fuera del commit. Crea un mensaje de commit descriptivo
+7. Haz push y crea un PR, usando el ID del ticket (por ejemplo SCRUM-1) para que se vincule en el ticket solicitado
 
-Remember to use the GitHub CLI (`gh`) for all GitHub-related tasks.
+Recuerda usar el CLI de GitHub (`gh`) para todas las tareas relacionadas con GitHub.
+En repositorios con origin y upstream, usar siempre origin como repositorio por defecto en gh.

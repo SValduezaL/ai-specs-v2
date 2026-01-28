@@ -1,37 +1,37 @@
 ---
-description: Directs all AI agents to use the consolidated rules in base-standards.mdc
+description: Dirige a todos los agentes de IA a usar las reglas consolidadas en base-standards.mdc
 globs: 
 alwaysApply: true
 ---
 
-# Use Base Development Rules
+# Usar Reglas de Desarrollo Base
 
-All AI agents working on this project must follow the comprehensive development rules and guidelines defined in:
+Todos los agentes de IA que trabajan en este proyecto deben seguir las reglas y directrices de desarrollo integrales definidas en:
 
-**📋 [ai-specs/specs/base-standards.mdc](/Users/alvaromoya/projects/versiones ejercicios/AI4Devs-LTI/ai-specs/specs/base-standards.mdc)**
+**📋 [ai-specs/specs/base-standards.mdc](../../ai-specs/specs/base-standards.mdc)**
 
-## Key Directive
+## Directiva Clave
 
-- **Single Source of Truth**: All development rules, coding standards, testing practices, and workflow requirements are maintained in `base-standards.mdc`
-- **No Rule Duplication**: Do not reference or follow other rule files - `base-standards.mdc` contains the complete and authoritative rule set
-- **Always Current**: `base-standards.mdc` is the actively maintained configuration - other rule files may be outdated
+- **Fuente Única de Verdad**: Todas las reglas de desarrollo, estándares de codificación, prácticas de pruebas y requisitos de flujo de trabajo se mantienen en `base-standards.mdc`
+- **Sin Duplicación de Reglas**: No referenciar ni seguir otros archivos de reglas - `base-standards.mdc` contiene el conjunto de reglas completo y autoritativo
+- **Siempre Actual**: `base-standards.mdc` es la configuración mantenida activamente - otros archivos de reglas pueden estar desactualizados
 
-## What's Included in base-standards.mdc
+## Qué Incluye base-standards.mdc
 
-- **Core Principles**: Small tasks one at a time, Test-Driven Development (TDD), type safety, clear naming, incremental changes
-- **Language Standards**: English-only requirement for all technical artifacts
-- **Specific Standards**: Links to detailed standards for:
-  - Backend development (API, database patterns, testing, security)
-  - Frontend development (React components, UI/UX guidelines)
-  - Documentation (structure, formatting, maintenance)
+- **Principios Centrales**: Tareas pequeñas una a la vez, Desarrollo Guiado por Pruebas (TDD), seguridad de tipos, nomenclatura clara, cambios incrementales
+- **Estándares de Lenguaje**: Código y nomenclatura técnica siempre en **INGLÉS**; comentarios, documentación y comunicación humana siempre en **ESPAÑOL**
+- **Estándares Específicos**: Enlaces a estándares detallados para:
+  - Desarrollo backend (API, patrones de base de datos, pruebas, seguridad)
+  - Desarrollo frontend (componentes React, directrices de UI/UX)
+  - Documentación (estructura, formato, mantenimiento)
 
-## Compliance
+## Cumplimiento
 
-Before starting any development work, agents must:
-1. Read and understand all rules in `base-standards.mdc`
-2. Follow the TDD process and core principles defined there
-3. Use the specified tools, testing frameworks, and standards
-4. Maintain the required code quality and type safety standards
-5. Refer to specific standards documents (backend, frontend, documentation) for detailed guidelines
+Antes de comenzar cualquier trabajo de desarrollo, los agentes deben:
+1. Leer y comprender todas las reglas en `base-standards.mdc`
+2. Seguir el proceso TDD y los principios centrales definidos allí
+3. Usar las herramientas, frameworks de prueba y estándares especificados
+4. Mantener los estándares requeridos de calidad de código y seguridad de tipos
+5. Referirse a los documentos de estándares específicos (backend, frontend, documentación) para directrices detalladas
 
-**Remember**: `base-standards.mdc` is the complete development rulebook for this project.
+**Recuerda**: `base-standards.mdc` es el manual de desarrollo completo para este proyecto.

@@ -1,1 +1,1 @@
-Use `openspec/specs/documentation-standards.mdc` to update whatever documentation is needed according to the changes made
+Usa `ai-specs/specs/documentation-standards.mdc` para actualizar cualquier documentación que sea necesaria según los cambios realizados

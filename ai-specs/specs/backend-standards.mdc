@@ -1,177 +1,177 @@
 ---
-description: Backend development standards, best practices, and conventions for the LTI Node.js/TypeScript/Express application including Domain-Driven Design, SOLID principles, architecture patterns, API design, and testing practices
+description: Estándares de desarrollo backend, mejores prácticas y convenciones para la aplicación del Proyecto Final del Máster AI4Devs, Node.js/TypeScript/Express, incluyendo Diseño Dirigido por el Dominio, principios SOLID, patrones de arquitectura, diseño de API y prácticas de pruebas
 globs: ["backend/src/**/*.ts", "backend/prisma/**/*.{prisma,ts}", "backend/jest.config.js", "backend/tsconfig.json", "backend/serverless.yml", "backend/package.json"]
 alwaysApply: true
 ---
 
-# Backend Project Standards and Best Practices
+# Estándares y Mejores Prácticas del Proyecto Backend
 
-## Table of Contents
+## Tabla de Contenidos
 
-- [Overview](#overview)
-- [Technology Stack](#technology-stack)
-  - [Core Technologies](#core-technologies)
-  - [Database & ORM](#database--orm)
-  - [Testing Framework](#testing-framework)
-  - [Development Tools](#development-tools)
-- [Architecture Overview](#architecture-overview)
-  - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
-  - [Layered Architecture](#layered-architecture)
-  - [Project Structure](#project-structure)
-- [Domain-Driven Design Principles](#domain-driven-design-principles)
-  - [Entities](#entities)
-  - [Value Objects](#value-objects)
-  - [Aggregates](#aggregates)
-  - [Repositories](#repositories)
-  - [Domain Services](#domain-services)
-  - [Additional Recommendations](#additional-recommendations)
-- [SOLID and DRY Principles](#solid-and-dry-principles)
-  - [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
-  - [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
-  - [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
-  - [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
-  - [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  - [DRY (Don't Repeat Yourself)](#dry-dont-repeat-yourself)
-- [Coding Standards](#coding-standards)
-  - [Language and Naming Conventions](#language-and-naming-conventions)
-  - [TypeScript Usage](#typescript-usage)
-  - [Error Handling](#error-handling)
-  - [Validation Patterns](#validation-patterns)
-  - [Logging Standards](#logging-standards)
-- [API Design Standards](#api-design-standards)
-  - [REST Endpoints](#rest-endpoints)
-  - [Request/Response Patterns](#requestresponse-patterns)
-  - [Error Response Format](#error-response-format)
-  - [CORS Configuration](#cors-configuration)
-- [Database Patterns](#database-patterns)
-  - [Prisma Schema](#prisma-schema)
-  - [Migrations](#migrations)
-  - [Repository Pattern](#repository-pattern)
-- [Testing Standards](#testing-standards)
-  - [Unit Testing](#unit-testing)
-  - [Integration Testing](#integration-testing)
-  - [Test Coverage Requirements](#test-coverage-requirements)
-  - [Mocking Standards](#mocking-standards)
-- [Performance Best Practices](#performance-best-practices)
-  - [Database Query Optimization](#database-query-optimization)
-  - [Async/Await Patterns](#asyncawait-patterns)
-  - [Error Handling Performance](#error-handling-performance)
-- [Security Best Practices](#security-best-practices)
-  - [Input Validation](#input-validation)
-  - [Environment Variables](#environment-variables)
-  - [Dependency Injection](#dependency-injection)
-- [Development Workflow](#development-workflow)
-  - [Git Workflow](#git-workflow)
-  - [Development Scripts](#development-scripts)
-  - [Code Quality](#code-quality)
-- [Serverless Deployment](#serverless-deployment)
-  - [AWS Lambda Configuration](#aws-lambda-configuration)
-  - [Serverless Framework](#serverless-framework)
+- [Visión General](#visión-general)
+- [Stack Tecnológico](#stack-tecnológico)
+  - [Tecnologías Centrales](#tecnologías-centrales)
+  - [Base de Datos y ORM](#base-de-datos-y-orm)
+  - [Framework de Pruebas](#framework-de-pruebas)
+  - [Herramientas de Desarrollo](#herramientas-de-desarrollo)
+- [Visión General de Arquitectura](#visión-general-de-arquitectura)
+  - [Diseño Dirigido por el Dominio (DDD)](#diseño-dirigido-por-el-dominio-ddd)
+  - [Arquitectura en Capas](#arquitectura-en-capas)
+  - [Estructura del Proyecto](#estructura-del-proyecto)
+- [Principios de Diseño Dirigido por el Dominio](#principios-de-diseño-dirigido-por-el-dominio)
+  - [Entidades](#entidades)
+  - [Objetos de Valor](#objetos-de-valor)
+  - [Agregados](#agregados)
+  - [Repositorios](#repositorios)
+  - [Servicios de Dominio](#servicios-de-dominio)
+  - [Recomendaciones Adicionales](#recomendaciones-adicionales)
+- [Principios SOLID y DRY](#principios-solid-y-dry)
+  - [Principio de Responsabilidad Única (SRP)](#principio-de-responsabilidad-única-srp)
+  - [Principio Abierto/Cerrado (OCP)](#principio-abiertocerrado-ocp)
+  - [Principio de Sustitución de Liskov (LSP)](#principio-de-sustitución-de-liskov-lsp)
+  - [Principio de Segregación de Interfaces (ISP)](#principio-de-segregación-de-interfaces-isp)
+  - [Principio de Inversión de Dependencias (DIP)](#principio-de-inversión-de-dependencias-dip)
+  - [DRY (No Te Repitas)](#dry-no-te-repitas)
+- [Estándares de Codificación](#estándares-de-codificación)
+  - [Lenguaje y Convenciones de Nomenclatura](#lenguaje-y-convenciones-de-nomenclatura)
+  - [Uso de TypeScript](#uso-de-typescript)
+  - [Manejo de Errores](#manejo-de-errores)
+  - [Patrones de Validación](#patrones-de-validación)
+  - [Estándares de Logging](#estándares-de-logging)
+- [Estándares de Diseño de API](#estándares-de-diseño-de-api)
+  - [Endpoints REST](#endpoints-rest)
+  - [Patrones de Petición/Respuesta](#patrones-de-peticiónrespuesta)
+  - [Formato de Respuesta de Error](#formato-de-respuesta-de-error)
+  - [Configuración de CORS](#configuración-de-cors)
+- [Patrones de Base de Datos](#patrones-de-base-de-datos)
+  - [Esquema Prisma](#esquema-prisma)
+  - [Migraciones](#migraciones)
+  - [Patrón Repositorio](#patrón-repositorio)
+- [Estándares de Pruebas](#estándares-de-pruebas)
+  - [Pruebas Unitarias](#pruebas-unitarias)
+  - [Pruebas de Integración](#pruebas-de-integración)
+  - [Requisitos de Cobertura de Pruebas](#requisitos-de-cobertura-de-pruebas)
+  - [Estándares de Mocking](#estándares-de-mocking)
+- [Mejores Prácticas de Rendimiento](#mejores-prácticas-de-rendimiento)
+  - [Optimización de Consultas de Base de Datos](#optimización-de-consultas-de-base-de-datos)
+  - [Patrones Async/Await](#patrones-asyncawait)
+  - [Rendimiento del Manejo de Errores](#rendimiento-del-manejo-de-errores)
+- [Mejores Prácticas de Seguridad](#mejores-prácticas-de-seguridad)
+  - [Validación de Entrada](#validación-de-entrada)
+  - [Variables de Entorno](#variables-de-entorno)
+  - [Inyección de Dependencias](#inyección-de-dependencias)
+- [Flujo de Trabajo de Desarrollo](#flujo-de-trabajo-de-desarrollo)
+  - [Flujo de Trabajo de Git](#flujo-de-trabajo-de-git)
+  - [Scripts de Desarrollo](#scripts-de-desarrollo)
+  - [Calidad de Código](#calidad-de-código)
+- [Despliegue Serverless](#despliegue-serverless)
+  - [Configuración de AWS Lambda](#configuración-de-aws-lambda)
+  - [Framework Serverless](#framework-serverless)
 
 ---
 
-## Overview
+## Visión General
 
-This document outlines the best practices, conventions, and standards used in the LTI backend application. The backend follows Domain-Driven Design (DDD) principles and implements a layered architecture to ensure code consistency, maintainability, and scalability.
+Este documento describe las mejores prácticas, convenciones y estándares utilizados en la aplicación backend del Proyecto Final del Máster AI4Devs. El backend sigue principios de Diseño Dirigido por el Dominio (DDD) e implementa una arquitectura en capas para asegurar consistencia, mantenibilidad y escalabilidad del código.
 
-## Technology Stack
+## Stack Tecnológico
 
-### Core Technologies
-- **Node.js**: Runtime environment
-- **TypeScript**: Type-safe development with strict mode
-- **Express.js**: Web application framework
-- **Prisma**: Modern ORM for database access
+### Tecnologías Centrales
+- **Node.js**: Entorno de ejecución
+- **TypeScript**: Desarrollo con seguridad de tipos y modo estricto
+- **Express.js**: Framework de aplicación web
+- **Prisma**: ORM moderno para acceso a base de datos
 
-### Database & ORM
-- **PostgreSQL**: Relational database (Docker container)
-- **Prisma Client**: Type-safe database client
-- **Prisma Migrate**: Database migration tool
+### Base de Datos y ORM
+- **PostgreSQL**: Base de datos relacional (contenedor Docker)
+- **Prisma Client**: Cliente de base de datos con seguridad de tipos
+- **Prisma Migrate**: Herramienta de migración de base de datos
 
-### Testing Framework
-- **Jest**: Testing framework with TypeScript support
-- **Coverage Threshold**: 90% for branches, functions, lines, and statements
-- **Test Location**: `__tests__` directories and `.test.ts` files
+### Framework de Pruebas
+- **Jest**: Framework de pruebas con soporte para TypeScript
+- **Umbral de Cobertura**: 90% para ramas, funciones, líneas y sentencias
+- **Ubicación de Pruebas**: Directorios `__tests__` y archivos `.test.ts`
 
-### Development Tools
-- **ESLint**: Code linting
-- **TypeScript Compiler**: Type checking and compilation
-- **Serverless Framework**: AWS Lambda deployment support
+### Herramientas de Desarrollo
+- **ESLint**: Linting de código
+- **TypeScript Compiler**: Verificación de tipos y compilación
+- **Serverless Framework**: Soporte de despliegue en AWS Lambda
 
-## Architecture Overview
+## Visión General de Arquitectura
 
-### Domain-Driven Design (DDD)
+### Diseño Dirigido por el Dominio (DDD)
 
-Domain-Driven Design is a methodology that focuses on modeling software according to business logic and domain knowledge. By centering development on a deep understanding of the domain, DDD facilitates the creation of complex systems.
+El Diseño Dirigido por el Dominio es una metodología que se enfoca en modelar software según la lógica de negocio y el conocimiento del dominio. Al centrar el desarrollo en una comprensión profunda del dominio, DDD facilita la creación de sistemas complejos.
 
-**Benefits:**
-- **Improved Communication**: Promotes a common language between developers and domain experts, improving communication and reducing interpretation errors.
-- **Clear Domain Models**: Helps build models that accurately reflect business rules and processes.
-- **High Maintainability**: By dividing the system into subdomains, it facilitates maintenance and software evolution.
+**Beneficios:**
+- **Comunicación Mejorada**: Promueve un lenguaje común entre desarrolladores y expertos del dominio, mejorando la comunicación y reduciendo errores de interpretación.
+- **Modelos de Dominio Claros**: Ayuda a construir modelos que reflejan con precisión las reglas y procesos de negocio.
+- **Alta Mantenibilidad**: Al dividir el sistema en subdominios, facilita el mantenimiento y la evolución del software.
 
-### Layered Architecture
+### Arquitectura en Capas
 
-The backend follows a layered DDD architecture:
+El backend sigue una arquitectura DDD en capas:
 
-**Presentation Layer** (`src/presentation/`)
-- Controllers handle HTTP requests/responses
-- Routes define API endpoints
-- Controllers use services from Application layer
+**Capa de Presentación** (`src/presentation/`)
+- Los controladores manejan peticiones/respuestas HTTP
+- Las rutas definen endpoints de API
+- Los controladores usan servicios de la capa de Aplicación
 
-**Application Layer** (`src/application/`)
-- Services contain business logic and orchestration
-- Validator handles input validation
-- Services use repositories from Domain layer
+**Capa de Aplicación** (`src/application/`)
+- Los servicios contienen lógica de negocio y orquestación
+- El validador maneja validación de entrada
+- Los servicios usan repositorios de la capa de Dominio
 
-**Domain Layer** (`src/domain/`)
-- Models define core business entities (Candidate, Position, Application, Interview, etc.)
-- Repository interfaces define data access contracts
-- Pure business logic without external dependencies
+**Capa de Dominio** (`src/domain/`)
+- Los modelos definen entidades de negocio centrales
+- Las interfaces de repositorio definen contratos de acceso a datos
+- Lógica de negocio pura sin dependencias externas
 
-**Infrastructure Layer** (implicit)
-- Prisma ORM handles database operations
-- Repository implementations (via Prisma) satisfy domain interfaces
+**Capa de Infraestructura** (implícita)
+- Prisma ORM maneja operaciones de base de datos
+- Implementaciones de repositorio (vía Prisma) satisfacen interfaces de dominio
 
-### Project Structure
+### Estructura del Proyecto
 
 ```
 backend/
 ├── src/
 │   ├── domain/
-│   │   ├── models/          # Domain entities
-│   │   └── repositories/    # Repository interfaces
+│   │   ├── models/          # Entidades de dominio
+│   │   └── repositories/    # Interfaces de repositorio
 │   ├── application/
-│   │   ├── services/        # Business logic services
-│   │   └── validator.ts     # Input validation
+│   │   ├── services/        # Servicios de lógica de negocio
+│   │   └── validator.ts     # Validación de entrada
 │   ├── presentation/
-│   │   └── controllers/     # HTTP request handlers
+│   │   └── controllers/     # Manejadores de peticiones HTTP
 │   ├── infrastructure/
-│   │   ├── logger.ts        # Logging utilities
-│   │   └── prismaClient.ts  # Prisma client setup
-│   ├── routes/              # Express route definitions
-│   ├── middleware/          # Express middleware
-│   ├── index.ts             # Application entry point
-│   └── lambda.ts            # AWS Lambda handler
+│   │   ├── logger.ts        # Utilidades de logging
+│   │   └── prismaClient.ts  # Configuración del cliente Prisma
+│   ├── routes/              # Definiciones de rutas Express
+│   ├── middleware/          # Middleware de Express
+│   ├── index.ts             # Punto de entrada de la aplicación
+│   └── lambda.ts            # Manejador de AWS Lambda
 ├── prisma/
-│   ├── schema.prisma        # Database schema
-│   └── migrations/          # Database migrations
+│   ├── schema.prisma        # Esquema de base de datos
+│   └── migrations/          # Migraciones de base de datos
 ├── test-utils/
-│   ├── builders/            # Test data builders
-│   └── mocks/               # Mock helpers
-├── jest.config.js           # Jest configuration
-├── tsconfig.json            # TypeScript configuration
-├── serverless.yml           # Serverless Framework config
-└── package.json             # Dependencies and scripts
+│   ├── builders/            # Constructores de datos de prueba
+│   └── mocks/               # Helpers de mocks
+├── jest.config.js           # Configuración de Jest
+├── tsconfig.json            # Configuración de TypeScript
+├── serverless.yml           # Configuración de Serverless Framework
+└── package.json             # Dependencias y scripts
 ```
 
-## Domain-Driven Design Principles
+## Principios de Diseño Dirigido por el Dominio (DDD)
 
-### Entities
+### Entidades
 
-Entities are objects with a distinct identity that persists over time.
+Las entidades son objetos con una identidad distinta que persiste a lo largo del tiempo.
 
-**Before:**
+**Antes:**
 ```typescript
-// Previously, candidate data might have been handled as a simple JSON object without methods.
+// Anteriormente, los datos de candidato podrían haberse manejado como un simple objeto JSON sin métodos.
 const candidate = {
     id: 1,
     firstName: 'John',
@@ -180,7 +180,7 @@ const candidate = {
 };
 ```
 
-**After:**
+**Después:**
 ```typescript
 export class Candidate {
     id?: number;
@@ -188,7 +188,7 @@ export class Candidate {
     lastName: string;
     email: string;
     
-    // Constructor and methods that encapsulate business logic
+    // Constructor y métodos que encapsulan lógica de negocio
     constructor(data: any) {
         this.id = data.id;
         this.firstName = data.firstName;
@@ -198,17 +198,17 @@ export class Candidate {
 }
 ```
 
-**Explanation**: `Candidate` is an entity because it has a unique identifier (`id`) that distinguishes it from other candidates, even if other properties are identical.
+**Explicación**: `Candidate` es una entidad porque tiene un identificador único (`id`) que lo distingue de otros candidatos, incluso si otras propiedades son idénticas.
 
-**Best Practice**: Entities should encapsulate business logic related to their domain concept and maintain consistency of their internal state.
+**Mejor Práctica**: Las entidades deben encapsular lógica de negocio relacionada con su concepto de dominio y mantener la consistencia de su estado interno.
 
-### Value Objects
+### Objetos de Valor
 
-Value Objects describe aspects of the domain without conceptual identity. They are defined by their attributes rather than an identifier.
+Los Objetos de Valor describen aspectos del dominio sin identidad conceptual. Están definidos por sus atributos en lugar de un identificador.
 
-**Before:**
+**Antes:**
 ```typescript
-// Handling education information as a simple object
+// Manejo de información de educación como un objeto simple
 const education = {
     institution: 'University',
     degree: 'Bachelor',
@@ -217,7 +217,7 @@ const education = {
 };
 ```
 
-**After:**
+**Después:**
 ```typescript
 export class Education {
     institution: string;
@@ -234,22 +234,22 @@ export class Education {
 }
 ```
 
-**Explanation**: `Education` can be considered a Value Object in some contexts, as it describes a candidate's education without needing a unique identifier. However, in the current model, it has been assigned an id, which could contradict the pure definition of a Value Object in DDD.
+**Explicación**: `Education` puede considerarse un Objeto de Valor en algunos contextos, ya que describe la educación de un candidato sin necesitar un identificador único. Sin embargo, en el modelo actual, se le ha asignado un id, lo que podría contradecir la definición pura de un Objeto de Valor en DDD.
 
-**Recommendation**: Classes like `Education` and `WorkExperience` currently have unique identifiers, classifying them as entities. In many cases, these could be treated as Value Objects within the context of a `Candidate` aggregate. Consider removing unique identifiers from classes that should be Value Objects, or incorporating them as part of the Candidate document if using a NoSQL database.
+**Recomendación**: Clases como `Education` y `WorkExperience` actualmente tienen identificadores únicos, clasificándolas como entidades. En muchos casos, estas podrían tratarse como Objetos de Valor dentro del contexto de un agregado `Candidate`. Considere eliminar identificadores únicos de clases que deberían ser Objetos de Valor, o incorporarlas como parte del documento Candidate si usa una base de datos NoSQL.
 
-### Aggregates
+### Agregados
 
-Aggregates are clusters of objects that must be treated as a unit. They have a root entity that enforces invariants and consistency boundaries.
+Los agregados son grupos de objetos que deben tratarse como una unidad. Tienen una entidad raíz que hace cumplir invariantes y límites de consistencia.
 
-**Before:**
+**Antes:**
 ```typescript
-// Candidate and education data handled separately
+// Datos de candidato y educación manejados por separado
 const candidate = { id: 1, name: 'John Doe' };
 const educations = [{ candidateId: 1, institution: 'University' }];
 ```
 
-**After:**
+**Después:**
 ```typescript
 export class Candidate {
     id?: number;
@@ -268,23 +268,23 @@ export class Candidate {
 }
 ```
 
-**Explanation**: `Candidate` acts as an aggregate root that contains `Education`, `WorkExperience`, `Resume`, and `Application`. `Candidate` is the root of the aggregate, as the other entities only make sense in relation to a candidate.
+**Explicación**: `Candidate` actúa como raíz de agregado que contiene `Education`, `WorkExperience`, `Resume` y `Application`. `Candidate` es la raíz del agregado, ya que las otras entidades solo tienen sentido en relación con un candidato.
 
-**Recommendation**: Aggregates should be carefully designed to ensure that all operations within the aggregate boundary maintain consistency. Operations that affect `Education` and `WorkExperience` should be handled through the aggregate root, `Candidate`, to maintain integrity and encapsulation.
+**Recomendación**: Los agregados deben diseñarse cuidadosamente para asegurar que todas las operaciones dentro del límite del agregado mantengan consistencia. Las operaciones que afectan `Education` y `WorkExperience` deben manejarse a través de la raíz del agregado, `Candidate`, para mantener integridad y encapsulación.
 
-### Repositories
+### Repositorios
 
-Repositories provide interfaces for accessing aggregates and entities, encapsulating data access logic.
+Los repositorios proporcionan interfaces para acceder a agregados y entidades, encapsulando lógica de acceso a datos.
 
-**Before:**
+**Antes:**
 ```typescript
-// Direct database access without abstraction
+// Acceso directo a base de datos sin abstracción
 function getCandidateById(id: number) {
     return database.query('SELECT * FROM candidates WHERE id = ?', [id]);
 }
 ```
 
-**After:**
+**Después:**
 ```typescript
 export interface ICandidateRepository {
     findById(id: number): Promise<Candidate | null>;
@@ -299,25 +299,25 @@ export class CandidateRepository implements ICandidateRepository {
     }
     
     async save(candidate: Candidate): Promise<Candidate> {
-        // Implementation with Prisma
+        // Implementación con Prisma
     }
 }
 ```
 
-**Explanation**: `CandidateRepository` provides a clear interface for accessing candidate data, encapsulating database access logic.
+**Explicación**: `CandidateRepository` proporciona una interfaz clara para acceder a datos de candidato, encapsulando lógica de acceso a base de datos.
 
-**Recommendation**: 
-- Develop complete repository interfaces for each entity and aggregate, ensuring all database interactions for those entities pass through the repository
-- Implement repository methods that handle collections of entities, such as lists of Candidates, that can be filtered or modified in bulk
-- Use dependency injection to inject Prisma client into repositories
+**Recomendación**: 
+- Desarrollar interfaces de repositorio completas para cada entidad y agregado, asegurando que todas las interacciones de base de datos para esas entidades pasen por el repositorio
+- Implementar métodos de repositorio que manejen colecciones de entidades, como listas de Candidates, que puedan filtrarse o modificarse en masa
+- Usar inyección de dependencias para inyectar el cliente Prisma en repositorios
 
-### Domain Services
+### Servicios de Dominio
 
-Domain Services contain business logic that doesn't naturally belong to an entity or value object.
+Los Servicios de Dominio contienen lógica de negocio que no pertenece naturalmente a una entidad u objeto de valor.
 
-**Before:**
+**Antes:**
 ```typescript
-// Loose functions to handle business logic
+// Funciones sueltas para manejar lógica de negocio
 function calculateAge(candidate: any): number {
     const today = new Date();
     const birthDate = new Date(candidate.birthDate);
@@ -330,7 +330,7 @@ function calculateAge(candidate: any): number {
 }
 ```
 
-**After:**
+**Después:**
 ```typescript
 export class CandidateService {
     static calculateAge(candidate: Candidate): number {
@@ -346,41 +346,41 @@ export class CandidateService {
 }
 ```
 
-**Explanation**: `CandidateService` encapsulates business logic related to candidates, such as calculating age, providing a centralized and coherent point for handling these operations.
+**Explicación**: `CandidateService` encapsula lógica de negocio relacionada con candidatos, como calcular edad, proporcionando un punto centralizado y coherente para manejar estas operaciones.
 
-### Additional Recommendations
+### Recomendaciones Adicionales
 
-**Use of Factories**
+**Uso de Factories**
 
-Factories are useful in DDD to encapsulate the logic of creating complex objects, ensuring that all created objects comply with domain rules from the moment of creation.
+Las factories son útiles en DDD para encapsular la lógica de creación de objetos complejos, asegurando que todos los objetos creados cumplan con las reglas del dominio desde el momento de la creación.
 
-**Recommendation**: Implement factories for the creation of entities and aggregates, especially those that are complex and require specific initial configuration that complies with business rules.
+**Recomendación**: Implementar factories para la creación de entidades y agregados, especialmente aquellos que son complejos y requieren configuración inicial específica que cumpla con reglas de negocio.
 
-**Improvement in Relationship Modeling**
+**Mejora en el Modelado de Relaciones**
 
-Relationships between entities and aggregates must be clear and consistent with business rules.
+Las relaciones entre entidades y agregados deben ser claras y consistentes con las reglas de negocio.
 
-**Recommendation**: Review and possibly redesign relationships between entities to ensure they accurately reflect domain needs and rules. This may include removing unnecessary relationships or adding new relationships that facilitate business operations.
+**Recomendación**: Revisar y posiblemente rediseñar relaciones entre entidades para asegurar que reflejen con precisión las necesidades y reglas del dominio. Esto puede incluir eliminar relaciones innecesarias o agregar nuevas relaciones que faciliten operaciones de negocio.
 
-**Domain Events Integration**
+**Integración de Eventos de Dominio**
 
-Domain events are an important part of DDD and can be used to handle side effects of domain operations in a decoupled manner.
+Los eventos de dominio son una parte importante de DDD y pueden usarse para manejar efectos secundarios de operaciones de dominio de manera desacoplada.
 
-**Recommendation**: Implement a domain event system that allows entities and aggregates to publish events that other system components can handle without being tightly coupled to the entities that generate them.
+**Recomendación**: Implementar un sistema de eventos de dominio que permita a entidades y agregados publicar eventos que otros componentes del sistema puedan manejar sin estar estrechamente acoplados a las entidades que los generan.
 
-## SOLID and DRY Principles
+## Principios SOLID y DRY
 
-### SOLID Principles
+### Principios SOLID
 
-SOLID principles are five object-oriented design principles that help create more understandable, flexible, and maintainable systems.
+Los principios SOLID son cinco principios de diseño orientado a objetos que ayudan a crear sistemas más comprensibles, flexibles y mantenibles.
 
-#### Single Responsibility Principle (SRP)
+#### Principio de Responsabilidad Única (SRP)
 
-Each class should have a single responsibility or reason to change.
+Cada clase debe tener una única responsabilidad o razón para cambiar.
 
-**Before:**
+**Antes:**
 ```typescript
-// A method that handles multiple responsibilities: validation and data storage
+// Un método que maneja múltiples responsabilidades: validación y almacenamiento de datos
 function processCandidate(candidate: any) {
     if (!candidate.email.includes('@')) {
         console.error('Invalid email');
@@ -391,10 +391,10 @@ function processCandidate(candidate: any) {
 }
 ```
 
-**After:**
+**Después:**
 ```typescript
 export class Candidate {
-    // The class now only handles logic related to the candidate
+    // La clase ahora solo maneja lógica relacionada con el candidato
     validateEmail(): void {
         if (!this.email.includes('@')) {
             throw new Error('Invalid email');
@@ -410,59 +410,59 @@ export class CandidateRepository {
 }
 ```
 
-**Explanation**: The `Candidate` class now has separate methods for validation, while the repository handles data persistence, complying with the single responsibility principle.
+**Explicación**: La clase `Candidate` ahora tiene métodos separados para validación, mientras que el repositorio maneja la persistencia de datos, cumpliendo con el principio de responsabilidad única.
 
-**Observation**: The `Candidate` class in `backend/src/domain/models/Candidate.ts` handles both business logic and data access logic.
+**Observación**: La clase `Candidate` en `backend/src/domain/models/Candidate.ts` maneja tanto lógica de negocio como lógica de acceso a datos.
 
-**Recommendation**: Separate data access logic into a repository layer to adhere more closely to SRP.
+**Recomendación**: Separar la lógica de acceso a datos en una capa de repositorio para adherirse más estrictamente a SRP.
 
-#### Open/Closed Principle (OCP)
+#### Principio Abierto/Cerrado (OCP)
 
-Software entities should be open for extension but closed for modification.
+Las entidades de software deben estar abiertas para extensión pero cerradas para modificación.
 
-**Before:**
+**Antes:**
 ```typescript
-// Direct modification of the class to add functionality
+// Modificación directa de la clase para agregar funcionalidad
 class Candidate {
     saveToDatabase() {
-        // code to save to database
+        // código para guardar en base de datos
     }
-    // To add new functionality, we modify the class directly
+    // Para agregar nueva funcionalidad, modificamos la clase directamente
     sendEmail() {
-        // code to send an email
+        // código para enviar un email
     }
 }
 ```
 
-**After:**
+**Después:**
 ```typescript
 export class Candidate {
     saveToDatabase() {
-        // code to save to database
+        // código para guardar en base de datos
     }
 }
 
-// Extend functionality without modifying the existing class
+// Extender funcionalidad sin modificar la clase existente
 class CandidateWithEmail extends Candidate {
     sendEmail() {
-        // code to send an email
+        // código para enviar un email
     }
 }
 ```
 
-**Explanation**: The email sending functionality is extended in a subclass, keeping the original class closed for modifications but open for extensions.
+**Explicación**: La funcionalidad de envío de email se extiende en una subclase, manteniendo la clase original cerrada para modificaciones pero abierta para extensiones.
 
-**Observation**: The `addCandidate` function in `backend/src/application/services/candidateService.ts` directly instantiates `Candidate`, `Education`, `WorkExperience`, and `Resume` classes.
+**Observación**: La función `addCandidate` en `backend/src/application/services/candidateService.ts` instancia directamente las clases `Candidate`, `Education`, `WorkExperience` y `Resume`.
 
-**Recommendation**: Use factory methods to create instances, allowing for easier extension without modifying existing code.
+**Recomendación**: Usar métodos factory para crear instancias, permitiendo extensión más fácil sin modificar el código existente.
 
-#### Liskov Substitution Principle (LSP)
+#### Principio de Sustitución de Liskov (LSP)
 
-Objects of a derived class should be replaceable with objects of the base class without altering the program's functionality.
+Los objetos de una clase derivada deben ser reemplazables con objetos de la clase base sin alterar la funcionalidad del programa.
 
-**Before:**
+**Antes:**
 ```typescript
-// Subclass that cannot completely replace its base class
+// Subclase que no puede reemplazar completamente su clase base
 class TemporaryCandidate extends Candidate {
     saveToDatabase() {
         throw new Error("Temporary candidates can't be saved.");
@@ -470,30 +470,30 @@ class TemporaryCandidate extends Candidate {
 }
 ```
 
-**After:**
+**Después:**
 ```typescript
 class TemporaryCandidate extends Candidate {
     saveToDatabase() {
-        // Appropriate implementation that allows temporary handling
+        // Implementación apropiada que permite manejo temporal
         console.log("Handled temporarily");
-        // Alternative: Save to temporary storage
+        // Alternativa: Guardar en almacenamiento temporal
     }
 }
 ```
 
-**Explanation**: `TemporaryCandidate` now provides an appropriate implementation that respects the base class contract, allowing substitution without errors.
+**Explicación**: `TemporaryCandidate` ahora proporciona una implementación apropiada que respeta el contrato de la clase base, permitiendo sustitución sin errores.
 
-**Observation**: Currently, there is no inheritance in use where LSP could be violated. The project uses composition over inheritance, which generally supports LSP.
+**Observación**: Actualmente, no hay herencia en uso donde LSP pueda ser violado. El proyecto usa composición sobre herencia, lo que generalmente soporta LSP.
 
-**Recommendation**: Continue using composition to avoid LSP violations and ensure that any future inheritance structures allow derived classes to substitute their base classes without altering how the program works.
+**Recomendación**: Continuar usando composición para evitar violaciones de LSP y asegurar que cualquier estructura de herencia futura permita que las clases derivadas sustituyan sus clases base sin alterar cómo funciona el programa.
 
-#### Interface Segregation Principle (ISP)
+#### Principio de Segregación de Interfaces (ISP)
 
-Many specific interfaces are better than a single general interface.
+Muchas interfaces específicas son mejores que una única interfaz general.
 
-**Before:**
+**Antes:**
 ```typescript
-// A large interface that small clients don't fully use
+// Una interfaz grande que los clientes pequeños no usan completamente
 interface CandidateOperations {
     save(): void;
     validate(): void;
@@ -502,7 +502,7 @@ interface CandidateOperations {
 }
 ```
 
-**After:**
+**Después:**
 ```typescript
 interface SaveOperation {
     save(): void;
@@ -518,28 +518,28 @@ interface ReportOperations {
 
 class Candidate implements SaveOperation, EmailOperations {
     save() {
-        // implementation
+        // implementación
     }
     
     sendEmail() {
-        // implementation
+        // implementación
     }
 }
 ```
 
-**Explanation**: Interfaces are segregated into smaller operations, allowing classes to implement only the interfaces they need.
+**Explicación**: Las interfaces están segregadas en operaciones más pequeñas, permitiendo que las clases implementen solo las interfaces que necesitan.
 
-**Observation**: The project does not currently use TypeScript interfaces extensively to enforce contracts for classes.
+**Observación**: El proyecto actualmente no usa interfaces de TypeScript extensivamente para hacer cumplir contratos para clases.
 
-**Recommendation**: Define more granular interfaces for service classes to ensure they only implement the methods they need.
+**Recomendación**: Definir interfaces más granulares para clases de servicio para asegurar que solo implementen los métodos que necesitan.
 
-#### Dependency Inversion Principle (DIP)
+#### Principio de Inversión de Dependencias (DIP)
 
-High-level modules should not depend on low-level modules; both should depend on abstractions.
+Los módulos de alto nivel no deben depender de módulos de bajo nivel; ambos deben depender de abstracciones.
 
-**Before:**
+**Antes:**
 ```typescript
-// Direct dependency on a concrete implementation
+// Dependencia directa en una implementación concreta
 class Candidate {
     private database = new PrismaClient();
     
@@ -549,7 +549,7 @@ class Candidate {
 }
 ```
 
-**After:**
+**Después:**
 ```typescript
 interface Database {
     save(candidate: Candidate): Promise<Candidate>;
@@ -568,35 +568,35 @@ class Candidate {
 }
 ```
 
-**Explanation**: `Candidate` now depends on an abstraction (Database), not a concrete implementation, which facilitates flexibility and code testing.
+**Explicación**: `Candidate` ahora depende de una abstracción (Database), no de una implementación concreta, lo que facilita flexibilidad y pruebas de código.
 
-**Observation**: Classes like `Candidate` directly depend on the concrete `PrismaClient` for database operations.
+**Observación**: Clases como `Candidate` dependen directamente del `PrismaClient` concreto para operaciones de base de datos.
 
-**Recommendation**: Use dependency injection to invert the dependency, relying on abstractions rather than concrete implementations. Inject `PrismaClient` through the constructor or a setter method.
+**Recomendación**: Usar inyección de dependencias para invertir la dependencia, confiando en abstracciones en lugar de implementaciones concretas. Inyectar `PrismaClient` a través del constructor o un método setter.
 
-### DRY (Don't Repeat Yourself)
+### DRY (No Te Repitas)
 
-The DRY principle focuses on reducing duplication in code. Each piece of knowledge should have a single, unambiguous, and authoritative representation within a system.
+El principio DRY se enfoca en reducir duplicación en el código. Cada pieza de conocimiento debe tener una representación única, inequívoca y autoritativa dentro de un sistema.
 
-**Before:**
+**Antes:**
 ```typescript
-// Repeated code to validate emails in multiple functions
+// Código repetido para validar emails en múltiples funciones
 function saveCandidate(candidate: Candidate) {
     if (!candidate.email.includes('@')) {
         throw new Error('Invalid email');
     }
-    // save logic
+    // lógica de guardado
 }
 
 function updateCandidate(candidate: Candidate) {
     if (!candidate.email.includes('@')) {
         throw new Error('Invalid email');
     }
-    // update logic
+    // lógica de actualización
 }
 ```
 
-**After:**
+**Después:**
 ```typescript
 export class Candidate {
     validateEmail(): void {
@@ -607,36 +607,37 @@ export class Candidate {
     
     async save(): Promise<Candidate> {
         this.validateEmail();
-        // save logic
+        // lógica de guardado
     }
     
     async update(): Promise<Candidate> {
         this.validateEmail();
-        // update logic
+        // lógica de actualización
     }
 }
 ```
 
-**Explanation**: Email validation is centralized in a single `validateEmail` method, eliminating code duplication in the save and update functions.
+**Explicación**: La validación de email está centralizada en un único método `validateEmail`, eliminando duplicación de código en las funciones de guardado y actualización.
 
-**Observation**: The methods for saving entities like `Candidate`, `Education`, `WorkExperience`, and `Resume` contain repetitive logic for handling database operations.
+**Observación**: Los métodos para guardar entidades como `Candidate`, `Education`, `WorkExperience` y `Resume` contienen lógica repetitiva para manejar operaciones de base de datos.
 
-**Recommendation**: Abstract common database operation logic into a reusable function or class.
+**Recomendación**: Abstraer la lógica común de operaciones de base de datos en una función o clase reutilizable.
 
-## Coding Standards
+## Estándares de Codificación
 
-### Naming Conventions
+### Convenciones de Nomenclatura
 
-- **Variable Naming**: Use camelCase for variables and functions (e.g., `candidateId`, `findCandidateById`)
-- **Class Naming**: Use PascalCase for classes and interfaces (e.g., `Candidate`, `CandidateRepository`)
-- **Constants Naming**: Use UPPER_SNAKE_CASE for constants (e.g., `MAX_CANDIDATES_PER_PAGE`)
-- **Type Naming**: Use PascalCase for types and interfaces (e.g., `CandidateData`, `ICandidateRepository`)
-- **File Naming**: Use camelCase for file names (e.g., `candidateService.ts`, `candidateController.ts`)
+- **Nomenclatura de Variables**: Usar camelCase para variables y funciones (ej., `candidateId`, `findCandidateById`)
+- **Nomenclatura de Clases**: Usar PascalCase para clases e interfaces (ej., `Candidate`, `CandidateRepository`)
+- **Nomenclatura de Constantes**: Usar UPPER_SNAKE_CASE para constantes (ej., `MAX_CANDIDATES_PER_PAGE`)
+- **Nomenclatura de Tipos**: Usar PascalCase para tipos e interfaces (ej., `CandidateData`, `ICandidateRepository`)
+- **Nomenclatura de Archivos**: Usar camelCase para nombres de archivos (ej., `candidateService.ts`, `candidateController.ts`)
 
-**Examples:**
+**Ejemplos:**
 
 ```typescript
-// Good: All in English
+// Bien: Comentarios en español
+// Bien: Código y nombres de variables en inglés
 export class CandidateRepository {
     async findById(candidateId: number): Promise<Candidate | null> {
         // Find candidate by ID in the database
@@ -647,10 +648,11 @@ export class CandidateRepository {
     }
 }
 
-// Avoid: Non-English comments or names
+// Evitar: Comentarios en otro idioma diferente al español
+// Evitar: Nombres de variables o código en otro idioma diferente al inglés
 export class RepositorioCandidato {
     async buscarPorId(idCandidato: number): Promise<Candidato | null> {
-        // Buscar candidato por ID en la base de datos
+        // BFind candidato by ID in the database
         const candidato = await this.prisma.candidate.findUnique({
             where: { id: idCandidato }
         });
@@ -659,42 +661,42 @@ export class RepositorioCandidato {
 }
 ```
 
-**Error Messages and Logs:**
+**Mensajes de Error y Logs:**
 
 ```typescript
-// Good: English error messages
-throw new NotFoundError('Candidate not found with the provided ID');
-logger.error('Failed to create candidate', { error: error.message });
-
-// Avoid: Non-English messages
+// Bien: Mensajes de error en español
 throw new NotFoundError('Candidato no encontrado con el ID proporcionado');
 logger.error('Error al crear candidato', { error: error.message });
+
+// Evitar: Mensajes en otro idioma
+throw new NotFoundError('Candidate not found with the provided ID');
+logger.error('Failed to create candidate', { error: error.message });
 ```
 
-### TypeScript Usage
+### Uso de TypeScript
 
-- **Strict Mode**: Always enable strict mode in `tsconfig.json`
-- **Type Definitions**: Use explicit types for function parameters and return values
-- **Interfaces**: Define interfaces for complex data structures
-- **Avoid `any`**: Use `unknown` or specific types instead of `any` when possible
+- **Modo Estricto**: Siempre habilitar modo estricto en `tsconfig.json`
+- **Definiciones de Tipos**: Usar tipos explícitos para parámetros de función y valores de retorno
+- **Interfaces**: Definir interfaces para estructuras de datos complejas
+- **Evitar `any`**: Usar `unknown` o tipos específicos en lugar de `any` cuando sea posible
 
 ```typescript
-// Good: Explicit types
+// Bien: Tipos explícitos
 async function findCandidateById(id: number): Promise<Candidate | null> {
-    // implementation
+    // implementación
 }
 
-// Avoid: Using any
+// Evitar: Usar any
 function processData(data: any): any {
-    // implementation
+    // implementación
 }
 ```
 
-### Error Handling
+### Manejo de Errores
 
-- **Custom Error Classes**: Create domain-specific error classes
-- **Error Middleware**: Use global error middleware for consistent error responses
-- **Error Messages**: Provide descriptive error messages for debugging
+- **Clases de Error Personalizadas**: Crear clases de error específicas del dominio
+- **Middleware de Error**: Usar middleware de error global para respuestas de error consistentes
+- **Mensajes de Error**: Proporcionar mensajes de error descriptivos para depuración
 
 ```typescript
 export class NotFoundError extends Error {
@@ -704,11 +706,11 @@ export class NotFoundError extends Error {
     }
 }
 
-// In controller
+// En controlador
 try {
     const candidate = await candidateService.findById(id);
     if (!candidate) {
-        throw new NotFoundError('Candidate not found');
+        throw new NotFoundError('Candidato no encontrado');
     }
     res.json(candidate);
 } catch (error) {
@@ -716,11 +718,11 @@ try {
 }
 ```
 
-### Validation Patterns
+### Patrones de Validación
 
-- **Input Validation**: Validate all inputs at the application layer
-- **Use Validator Module**: Centralize validation logic in `src/application/validator.ts`
-- **Validate Before Processing**: Always validate before executing business logic
+- **Validación de Entrada**: Validar todas las entradas en la capa de aplicación
+- **Usar Módulo Validator**: Centralizar lógica de validación en `src/application/validator.ts`
+- **Validar Antes de Procesar**: Siempre validar antes de ejecutar lógica de negocio
 
 ```typescript
 import { validateCandidateData } from '../application/validator';
@@ -736,73 +738,73 @@ export async function addCandidate(req: Request, res: Response, next: NextFuncti
 }
 ```
 
-### Logging Standards
+### Estándares de Logging
 
-- **Use Logger Class**: Use the centralized logger from `src/infrastructure/logger.ts`
-- **Log Levels**: Use appropriate log levels (info, error, warn, debug)
-- **Structured Logging**: Include relevant context in log messages
+- **Usar Clase Logger**: Usar el logger centralizado de `src/infrastructure/logger.ts`
+- **Niveles de Log**: Usar niveles de log apropiados (info, error, warn, debug)
+- **Logging Estructurado**: Incluir contexto relevante en mensajes de log
 
 ```typescript
 import { Logger } from '../infrastructure/logger';
 
 const logger = new Logger();
 
-logger.info('Candidate created', { candidateId: candidate.id });
-logger.error('Failed to create candidate', { error: error.message });
+logger.info('Candidato creado', { candidateId: candidate.id });
+logger.error('Fallo al crear candidato', { error: error.message });
 ```
 
-## API Design Standards
+## Estándares de Diseño de API
 
-### REST Endpoints
+### Endpoints REST
 
-- **RESTful Naming**: Use RESTful conventions for endpoint naming
-- **HTTP Methods**: Use appropriate HTTP methods (GET, POST, PUT, DELETE, PATCH)
-- **Resource-Based URLs**: URLs should represent resources, not actions
+- **Nomenclatura RESTful**: Usar convenciones RESTful para nomenclatura de endpoints
+- **Métodos HTTP**: Usar métodos HTTP apropiados (GET, POST, PUT, DELETE, PATCH)
+- **URLs Basadas en Recursos**: Las URLs deben representar recursos, no acciones
 
 ```typescript
-GET    /candidates          // List candidates
-GET    /candidates/:id      // Get candidate by ID
-POST   /candidates          // Create new candidate
-PUT    /candidates/:id      // Update candidate
-DELETE /candidates/:id      // Delete candidate
+GET    /candidates          // Listar candidatos
+GET    /candidates/:id      // Obtener candidato por ID
+POST   /candidates          // Crear nuevo candidato
+PUT    /candidates/:id      // Actualizar candidato
+DELETE /candidates/:id      // Eliminar candidato
 ```
 
-### Request/Response Patterns
+### Patrones de Petición/Respuesta
 
-- **JSON Format**: Use JSON for request and response bodies
-- **Consistent Structure**: Maintain consistent response structure across all endpoints
-- **Status Codes**: Use appropriate HTTP status codes
+- **Formato JSON**: Usar JSON para cuerpos de petición y respuesta
+- **Estructura Consistente**: Mantener estructura de respuesta consistente en todos los endpoints
+- **Códigos de Estado**: Usar códigos de estado HTTP apropiados
 
 ```typescript
-// Success response
+// Respuesta exitosa
 {
     "success": true,
     "data": { ... },
-    "message": "Operation completed successfully"
+    "message": "Operación completada con éxito"
 }
 
-// Error response
+// Respuesta de error
 {
     "success": false,
     "error": {
-        "message": "Error description",
+        "message": "Descripción del error",
         "code": "ERROR_CODE"
     }
 }
 ```
 
-### Error Response Format
+### Formato de Respuesta de Error
 
-- **Consistent Format**: All errors should follow the same response structure
-- **Error Codes**: Use meaningful error codes for different error types
-- **HTTP Status Codes**: Map errors to appropriate HTTP status codes
+- **Formato Consistente**: Todos los errores deben seguir la misma estructura de respuesta
+- **Códigos de Error**: Usar códigos de error significativos para diferentes tipos de error
+- **Códigos de Estado HTTP**: Mapear errores a códigos de estado HTTP apropiados
 
 ```typescript
 // 400 Bad Request
 {
     "success": false,
     "error": {
-        "message": "Validation failed",
+        "message": "Fallo Validación",
         "code": "VALIDATION_ERROR",
         "details": [ ... ]
     }
@@ -812,17 +814,17 @@ DELETE /candidates/:id      // Delete candidate
 {
     "success": false,
     "error": {
-        "message": "Resource not found",
+        "message": "Recurso no encontrado",
         "code": "NOT_FOUND"
     }
 }
 ```
 
-### CORS Configuration
+### Configuración de CORS
 
-- **Enable CORS**: Configure CORS to allow frontend origin
-- **Secure Configuration**: Only allow specific origins in production
-- **Credentials**: Configure credentials handling appropriately
+- **Habilitar CORS**: Configurar CORS para permitir origen del frontend
+- **Configuración Segura**: Solo permitir orígenes específicos en producción
+- **Credenciales**: Configurar manejo de credenciales apropiadamente
 
 ```typescript
 import cors from 'cors';
@@ -835,42 +837,42 @@ const corsOptions = {
 app.use(cors(corsOptions));
 ```
 
-## Database Patterns
+## Patrones de Base de Datos
 
-### Prisma Schema
+### Esquema Prisma
 
-- **Single Source of Truth**: `prisma/schema.prisma` is the single source of truth for database structure
-- **Relationships**: Define relationships using Prisma relations
-- **Naming Conventions**: Use consistent naming conventions (camelCase for fields, PascalCase for models)
+- **Fuente Única de Verdad**: `prisma/schema.prisma` es la fuente única de verdad para la estructura de base de datos
+- **Relaciones**: Definir relaciones usando relaciones de Prisma
+- **Convenciones de Nomenclatura**: Usar convenciones de nomenclatura consistentes (camelCase para campos, PascalCase para modelos)
 
-### Migrations
+### Migraciones
 
-- **Version Control**: All database changes must be version-controlled through migrations
-- **Migration Naming**: Use descriptive names for migrations
-- **Review Migrations**: Review migration files before applying
+- **Control de Versiones**: Todos los cambios de base de datos deben estar bajo control de versiones mediante migraciones
+- **Nomenclatura de Migraciones**: Usar nombres descriptivos para migraciones
+- **Revisar Migraciones**: Revisar archivos de migración antes de aplicar
 
 ```bash
-# Create migration
+# Crear migración
 npx prisma migrate dev --name descriptive_migration_name
 
-# Apply migrations in production
+# Aplicar migraciones en producción
 npx prisma migrate deploy
 ```
 
-### Repository Pattern
+### Patrón Repositorio
 
-- **Repository Interfaces**: Define repository interfaces in the domain layer
-- **Prisma Implementation**: Implement repositories using Prisma in the infrastructure layer
-- **Dependency Injection**: Inject Prisma client into repositories
+- **Interfaces de Repositorio**: Definir interfaces de repositorio en la capa de dominio
+- **Implementación con Prisma**: Implementar repositorios usando Prisma en la capa de infraestructura
+- **Inyección de Dependencias**: Inyectar cliente Prisma en repositorios
 
 ```typescript
-// Domain layer interface
+// Interfaz de capa de dominio
 export interface ICandidateRepository {
     findById(id: number): Promise<Candidate | null>;
     save(candidate: Candidate): Promise<Candidate>;
 }
 
-// Infrastructure layer implementation
+// Implementación de capa de infraestructura
 export class CandidateRepository implements ICandidateRepository {
     constructor(private prisma: PrismaClient) {}
     
@@ -881,19 +883,19 @@ export class CandidateRepository implements ICandidateRepository {
 }
 ```
 
-## Testing Standards
+## Estándares de Pruebas
 
-The project has strict requirements for code quality and maintainability. These are the unit testing standards and best practices that must be applied. 
+El proyecto tiene requisitos estrictos para calidad de código y mantenibilidad. Estos son los estándares y mejores prácticas de pruebas unitarias que deben aplicarse.
 
-### Test File Structure
-- Use descriptive test file names: `[componentName].test.ts`
-- Place test files alongside the source code they test
-- Use Jest as the testing framework with TypeScript support
-- Maintain 90% coverage threshold for branches, functions, lines, and statements
+### Estructura de Archivos de Prueba
+- Usar nombres descriptivos de archivos de prueba: `[componentName].test.ts`
+- Colocar archivos de prueba junto al código fuente que prueban
+- Usar Jest como framework de pruebas con soporte para TypeScript
+- Mantener umbral de cobertura de 90% para ramas, funciones, líneas y sentencias
 
 
-### Test Organization Pattern
-Template:
+### Patrón de Organización de Pruebas
+Plantilla:
 ```typescript
 describe('[ComponentName] - [methodName]', () => {
   beforeEach(() => {
@@ -910,7 +912,7 @@ describe('[ComponentName] - [methodName]', () => {
 });
 ```
 
-Real example:
+Ejemplo real:
 ```typescript
 describe('CandidateService - findById', () => {
     beforeEach(() => {
@@ -935,33 +937,33 @@ describe('CandidateService - findById', () => {
 
 
 
-### Test Case Naming Convention
-- Use descriptive, behavior-driven naming: `should_[expected_behavior]_when_[condition]`
-- Group related test cases under descriptive `describe` blocks
-- Use snake_case for describe blocks and camelCase for individual tests
+### Convención de Nomenclatura de Casos de Prueba
+- Usar nomenclatura descriptiva, dirigida por comportamiento: `should_[expected_behavior]_when_[condition]`
+- Agrupar casos de prueba relacionados bajo bloques `describe` descriptivos
+- Usar snake_case para bloques describe y camelCase para pruebas individuales
 
-### Test Structure (AAA Pattern)
-Always follow the Arrange-Act-Assert pattern:
+### Estructura de Prueba (Patrón AAA)
+Siempre seguir el patrón Arrange-Act-Assert:
 ```typescript
 it('should update candidate stage successfully when valid data provided', async () => {
-  // Arrange - Set up test data and mocks
+  // Arrange - Configurar datos de prueba y mocks
   const candidateId = 1;
   const applicationId = 1;
   const newInterviewStep = 2;
   
-  // Act - Execute the function under test
+  // Act - Ejecutar la función bajo prueba
   const result = await updateCandidateStage(candidateId, applicationId, newInterviewStep);
   
-  // Assert - Verify the expected behavior
+  // Assert - Verificar el comportamiento esperado
   expect(result).toEqual(expectedResult);
 });
 ```
 
-Assertion pattern:
-- Use specific matchers: `toHaveBeenCalledWith()`, `toHaveBeenCalledTimes()`
-- Verify both successful operations and error conditions
-- Check that mocks were called with correct parameters
-- Assert on return values and side effects
+Patrón de aserción:
+- Usar matchers específicos: `toHaveBeenCalledWith()`, `toHaveBeenCalledTimes()`
+- Verificar tanto operaciones exitosas como condiciones de error
+- Verificar que los mocks fueron llamados con parámetros correctos
+- Afirmar sobre valores de retorno y efectos secundarios
 
 
 
@@ -969,124 +971,123 @@ Assertion pattern:
 
 
 
+### Estándares de Mocking
 
-### Mocking Standards
-
-- Mock all external dependencies (models, services, database clients)
-- Mock repository layers in service tests
-- Mock service layers in controller tests
-- Use `jest.mock()` at the top of test files for module-level mocking
-- Create mock instances with realistic data structures
-- Clear all mocks in `beforeEach()` to ensure test isolation
-
-
-### Test Coverage Requirements
-
-- **Comprehensive test coverage**: Include these test categories for each function:
-1. **Happy Path Tests**: Valid inputs producing expected outputs
-2. **Error Handling Tests**: Invalid inputs, missing data, database errors
-3. **Edge Cases**: Boundary values, null/undefined inputs, empty data
-4. **Validation Tests**: Input validation, business rule enforcement
-5. **Integration Points**: External service calls, database operations
-
-- **Threshold**: 90% for branches, functions, lines, and statements
-- **Coverage Reports**: Generate coverage reports with `npm run test:coverage`
-- **Coverage Files**: Coverage reports in `coverage/` directory adding the date, like YYYYMMDD-backend-coverage.md
+- Hacer mock de todas las dependencias externas (modelos, servicios, clientes de base de datos)
+- Hacer mock de capas de repositorio en pruebas de servicio
+- Hacer mock de capas de servicio en pruebas de controlador
+- Usar `jest.mock()` al inicio de archivos de prueba para mocking a nivel de módulo
+- Crear instancias mock con estructuras de datos realistas
+- Limpiar todos los mocks en `beforeEach()` para asegurar aislamiento de pruebas
 
 
-### Error Testing
-- Test both expected errors and unexpected errors
-- Verify error messages are descriptive and helpful
-- Test error propagation through service layers
-- Ensure proper HTTP status codes in controller tests
+### Requisitos de Cobertura de Pruebas
 
-### Controller Testing Specifics
-- Mock the service layer completely
-- Test HTTP request/response handling
-- Verify parameter parsing and validation
-- Test error response formatting
-- Use realistic Express Request/Response mocks
+- **Cobertura de pruebas integral**: Incluir estas categorías de prueba para cada función:
+1. **Pruebas de Ruta Feliz**: Entradas válidas produciendo salidas esperadas
+2. **Pruebas de Manejo de Errores**: Entradas inválidas, datos faltantes, errores de base de datos
+3. **Casos Extremos**: Valores límite, entradas null/undefined, datos vacíos
+4. **Pruebas de Validación**: Validación de entrada, aplicación de reglas de negocio
+5. **Puntos de Integración**: Llamadas a servicios externos, operaciones de base de datos
 
-### Service Testing Specifics
-- Mock domain models and repositories
-- Test business logic in isolation
-- Verify data transformation and validation
-- Test error handling and edge cases
-- Mock external dependencies (Prisma, validators)
-
-### Database Testing
-- Mock Prisma client and all database operations
-- Test both successful and failed database operations
-- Verify correct database queries and parameters
-- Test transaction handling and rollback scenarios
-
-### Async Testing
-- Always use `async/await` for asynchronous operations
-- Use `Promise.allSettled()` for testing concurrent operations
-- Properly handle promise rejections in tests
-- Test timeout scenarios where applicable
-
-### Test Data Management
-- Use factory functions for creating test data
-- Keep test data consistent and realistic
-- Avoid hardcoded values in multiple places
-- Use meaningful test data that reflects real-world scenarios
-
-### Integration Testing
-
-- **Controller Testing**: Test HTTP request/response handling
-- **Database Testing**: Test repository implementations with database
-- **End-to-End Flow**: Test complete request flows
+- **Umbral**: 90% para ramas, funciones, líneas y sentencias
+- **Reportes de Cobertura**: Generar reportes de cobertura con `npm run test:coverage`
+- **Archivos de Cobertura**: Reportes de cobertura en directorio `coverage/` agregando la fecha, como YYYYMMDD-backend-coverage.md
 
 
-### Code Quality Standards
+### Prueba de Errores
+- Probar tanto errores esperados como inesperados
+- Verificar que los mensajes de error sean descriptivos y útiles
+- Probar propagación de errores a través de capas de servicio
+- Asegurar códigos de estado HTTP apropiados en pruebas de controlador
 
-#### TypeScript Usage
-- Use strict typing for all test parameters and return values
-- Define proper interfaces for mock data
-- Use type assertions sparingly and with proper justification
-- Leverage TypeScript's type system for better test reliability
+### Especificaciones de Pruebas de Controlador
+- Hacer mock completo de la capa de servicio
+- Probar manejo de petición/respuesta HTTP
+- Verificar parsing y validación de parámetros
+- Probar formato de respuesta de error
+- Usar mocks realistas de Request/Response de Express
 
-#### Documentation
-- Write clear, descriptive test names that explain the scenario
-- Add comments for complex test setups
-- Document any special test conditions or edge cases
-- Keep test code as readable as production code
+### Especificaciones de Pruebas de Servicio
+- Hacer mock de modelos de dominio y repositorios
+- Probar lógica de negocio en aislamiento
+- Verificar transformación y validación de datos
+- Probar manejo de errores y casos extremos
+- Hacer mock de dependencias externas (Prisma, validadores)
 
-#### Performance Considerations
-- Keep tests fast and focused
-- Avoid unnecessary async operations in tests
-- Use appropriate mock strategies to avoid real I/O
-- Group related tests to minimize setup/teardown overhead
+### Pruebas de Base de Datos
+- Hacer mock del cliente Prisma y todas las operaciones de base de datos
+- Probar tanto operaciones exitosas como fallidas de base de datos
+- Verificar consultas y parámetros correctos de base de datos
+- Probar manejo de transacciones y escenarios de rollback
 
-### Integration with Development Workflow
-- Run tests before every commit
-- Ensure all tests pass before merging
-- Use test-driven development when appropriate
-- Update tests when modifying existing functionality
+### Pruebas Asíncronas
+- Siempre usar `async/await` para operaciones asíncronas
+- Usar `Promise.allSettled()` para probar operaciones concurrentes
+- Manejar apropiadamente rechazos de promesas en pruebas
+- Probar escenarios de timeout donde sea aplicable
 
-### Common Anti-Patterns to Avoid
-- Don't test implementation details, test behavior
-- Don't create overly complex test setups
-- Don't ignore failing tests or skip error scenarios
-- Don't use real database connections in unit tests
-- Don't create tests that depend on external services
-- Don't write tests that are too tightly coupled to implementation
+### Gestión de Datos de Prueba
+- Usar funciones factory para crear datos de prueba
+- Mantener datos de prueba consistentes y realistas
+- Evitar valores hardcodeados en múltiples lugares
+- Usar datos de prueba significativos que reflejen escenarios del mundo real
 
-### Example Test Structure
+### Pruebas de Integración
+
+- **Pruebas de Controlador**: Probar manejo de petición/respuesta HTTP
+- **Pruebas de Base de Datos**: Probar implementaciones de repositorio con base de datos
+- **Flujo End-to-End**: Probar flujos completos de petición
+
+
+### Estándares de Calidad de Código
+
+#### Uso de TypeScript
+- Usar tipado estricto para todos los parámetros y valores de retorno de prueba
+- Definir interfaces apropiadas para datos mock
+- Usar aserciones de tipo con moderación y con justificación apropiada
+- Aprovechar el sistema de tipos de TypeScript para mejor confiabilidad de pruebas
+
+#### Documentación
+- Escribir nombres de prueba claros y descriptivos que expliquen el escenario
+- Agregar comentarios para configuraciones de prueba complejas
+- Documentar cualquier condición especial de prueba o casos extremos
+- Mantener el código de prueba tan legible como el código de producción
+
+#### Consideraciones de Rendimiento
+- Mantener pruebas rápidas y enfocadas
+- Evitar operaciones asíncronas innecesarias en pruebas
+- Usar estrategias de mock apropiadas para evitar I/O real
+- Agrupar pruebas relacionadas para minimizar overhead de setup/teardown
+
+### Integración con Flujo de Trabajo de Desarrollo
+- Ejecutar pruebas antes de cada commit
+- Asegurar que todas las pruebas pasen antes de fusionar
+- Usar desarrollo guiado por pruebas cuando sea apropiado
+- Actualizar pruebas al modificar funcionalidad existente
+
+### Anti-Patrones Comunes a Evitar
+- No probar detalles de implementación, probar comportamiento
+- No crear configuraciones de prueba excesivamente complejas
+- No ignorar pruebas fallidas u omitir escenarios de error
+- No usar conexiones reales de base de datos en pruebas unitarias
+- No crear pruebas que dependan de servicios externos
+- No escribir pruebas demasiado acopladas a la implementación
+
+### Estructura de Prueba de Ejemplo
 
 
 
-## Performance Best Practices
+## Mejores Prácticas de Rendimiento
 
-### Database Query Optimization
+### Optimización de Consultas de Base de Datos
 
-- **Select Specific Fields**: Only select fields that are needed
-- **Use Indexes**: Ensure proper database indexes for frequently queried fields
-- **Avoid N+1 Queries**: Use Prisma's `include` to fetch related data efficiently
+- **Seleccionar Campos Específicos**: Solo seleccionar campos que se necesitan
+- **Usar Índices**: Asegurar índices apropiados de base de datos para campos consultados frecuentemente
+- **Evitar Consultas N+1**: Usar `include` de Prisma para obtener datos relacionados eficientemente
 
 ```typescript
-// Good: Fetch related data efficiently
+// Bien: Obtener datos relacionados eficientemente
 const candidate = await prisma.candidate.findUnique({
     where: { id },
     include: {
@@ -1095,47 +1096,47 @@ const candidate = await prisma.candidate.findUnique({
     }
 });
 
-// Avoid: N+1 queries
+// Evitar: Consultas N+1
 const candidate = await prisma.candidate.findUnique({ where: { id } });
 const educations = await prisma.education.findMany({ where: { candidateId: id } });
 ```
 
-### Async/Await Patterns
+### Patrones Async/Await
 
-- **Always Use Async/Await**: Use async/await instead of promises chains
-- **Error Handling**: Properly handle errors in async operations
-- **Parallel Operations**: Use `Promise.all()` for parallel operations when appropriate
+- **Siempre Usar Async/Await**: Usar async/await en lugar de cadenas de promesas
+- **Manejo de Errores**: Manejar apropiadamente errores en operaciones asíncronas
+- **Operaciones Paralelas**: Usar `Promise.all()` para operaciones paralelas cuando sea apropiado
 
 ```typescript
-// Good: Parallel operations
+// Bien: Operaciones paralelas
 const [candidates, positions] = await Promise.all([
     candidateService.findAll(),
     positionService.findAll()
 ]);
 ```
 
-### Error Handling Performance
+### Rendimiento del Manejo de Errores
 
-- **Early Returns**: Return early to avoid unnecessary processing
-- **Error Propagation**: Let errors propagate naturally through the call stack
-- **Avoid Over-Wrapping**: Don't wrap errors unnecessarily
+- **Retornos Tempranos**: Retornar temprano para evitar procesamiento innecesario
+- **Propagación de Errores**: Dejar que los errores se propaguen naturalmente a través de la pila de llamadas
+- **Evitar Sobre-Envolvimiento**: No envolver errores innecesariamente
 
-## Security Best Practices
+## Mejores Prácticas de Seguridad
 
-### Input Validation
+### Validación de Entrada
 
-- **Validate All Inputs**: Validate all user inputs before processing
-- **Sanitize Data**: Sanitize data to prevent injection attacks
-- **Type Checking**: Use TypeScript and validation to ensure type safety
+- **Validar Todas las Entradas**: Validar todas las entradas de usuario antes de procesar
+- **Sanitizar Datos**: Sanitizar datos para prevenir ataques de inyección
+- **Verificación de Tipos**: Usar TypeScript y validación para asegurar seguridad de tipos
 
-### Environment Variables
+### Variables de Entorno
 
-- **Never Commit Secrets**: Never commit `.env` files or secrets to version control
-- **Use Environment Variables**: Use environment variables for configuration
-- **Validate Environment**: Validate required environment variables at startup
+- **Nunca Hacer Commit de Secretos**: Nunca hacer commit de archivos `.env` o secretos en control de versiones
+- **Usar Variables de Entorno**: Usar variables de entorno para configuración
+- **Validar Entorno**: Validar variables de entorno requeridas al inicio
 
 ```typescript
-// Validate required environment variables
+// Validar variables de entorno requeridas
 const requiredEnvVars = ['DATABASE_URL', 'PORT'];
 requiredEnvVars.forEach(varName => {
     if (!process.env[varName]) {
@@ -1144,20 +1145,20 @@ requiredEnvVars.forEach(varName => {
 });
 ```
 
-### Dependency Injection
+### Inyección de Dependencias
 
-- **Inject Prisma Client**: Inject Prisma client via Express middleware
-- **Avoid Global State**: Avoid global state for database connections
-- **Testability**: Use dependency injection to improve testability
+- **Inyectar Cliente Prisma**: Inyectar cliente Prisma vía middleware de Express
+- **Evitar Estado Global**: Evitar estado global para conexiones de base de datos
+- **Testabilidad**: Usar inyección de dependencias para mejorar testabilidad
 
 ```typescript
-// Middleware to inject Prisma client
+// Middleware para inyectar cliente Prisma
 app.use((req: Request, res: Response, next: NextFunction) => {
     req.prisma = prisma;
     next();
 });
 
-// Use in controllers
+// Usar en controladores
 export async function getCandidate(req: Request, res: Response) {
     const candidate = await req.prisma.candidate.findUnique({
         where: { id: req.params.id }
@@ -1166,47 +1167,47 @@ export async function getCandidate(req: Request, res: Response) {
 }
 ```
 
-## Development Workflow
+## Flujo de Trabajo de Desarrollo
 
-### Git Workflow
+### Flujo de Trabajo de Git
 
-- **Feature Branches**: Develop features in separate branches, adding descriptive suffix "-backend" to allow working in parallel and avoid conflicts or collisions
-- **Descriptive Commits**: Write descriptive commit messages in English
-- **Code Review**: Code review before merging
-- **Small Branches**: Keep branches small and focused
+- **Ramas de Funcionalidad**: Desarrollar funcionalidades en ramas separadas, agregando sufijo descriptivo "-backend" para permitir trabajar en paralelo y evitar conflictos o colisiones
+- **Commits Descriptivos**: Escribir mensajes de commit descriptivos en español
+- **Revisión de Código**: Revisión de código antes de fusionar
+- **Ramas Pequeñas**: Mantener ramas pequeñas y enfocadas
 
-### Development Scripts
+### Scripts de Desarrollo
 
 ```bash
-npm run dev          # Development server with hot reload
-npm run build        # Build for production
-npm test             # Run tests
-npm run test:coverage # Run tests with coverage
-npm run prisma:generate  # Generate Prisma client
-npx prisma migrate dev   # Create and apply migration
-npx prisma db seed       # Seed database
+npm run dev          # Servidor de desarrollo con recarga en caliente
+npm run build        # Compilar para producción
+npm test             # Ejecutar pruebas
+npm run test:coverage # Ejecutar pruebas con cobertura
+npm run prisma:generate  # Generar cliente Prisma
+npx prisma migrate dev   # Crear y aplicar migración
+npx prisma db seed       # Poblar base de datos
 ```
 
-### Code Quality
+### Calidad de Código
 
-- **ESLint Validation**: Run ESLint before commits
-- **TypeScript Compilation**: Ensure TypeScript compiles without errors
-- **All Tests Passing**: Ensure all tests pass before deployment
-- **Code Review**: Review code for adherence to standards
+- **Validación de ESLint**: Ejecutar ESLint antes de commits
+- **Compilación de TypeScript**: Asegurar que TypeScript compila sin errores
+- **Todas las Pruebas Pasando**: Asegurar que todas las pruebas pasen antes del despliegue
+- **Revisión de Código**: Revisar código para adherencia a estándares
 
-## Serverless Deployment
+## Despliegue Serverless
 
-### AWS Lambda Configuration
+### Configuración de AWS Lambda
 
-- **Lambda Handler**: Entry point is `src/lambda.ts`
-- **Serverless HTTP**: Use `serverless-http` to wrap Express app
-- **Environment Variables**: Configure environment variables in `serverless.yml`
+- **Manejador Lambda**: El punto de entrada es `src/lambda.ts`
+- **Serverless HTTP**: Usar `serverless-http` para envolver la app Express
+- **Variables de Entorno**: Configurar variables de entorno en `serverless.yml`
 
-### Serverless Framework
+### Framework Serverless
 
-- **Configuration File**: `serverless.yml` defines Lambda configuration
-- **Build Command**: Use `npm run build:lambda` for Lambda builds
-- **Deployment**: Deploy using Serverless Framework CLI
+- **Archivo de Configuración**: `serverless.yml` define la configuración de Lambda
+- **Comando de Compilación**: Usar `npm run build:lambda` para compilaciones de Lambda
+- **Despliegue**: Desplegar usando CLI de Serverless Framework
 
 ```typescript
 // lambda.ts
@@ -1225,4 +1226,4 @@ export const handler = async (
 };
 ```
 
-This document serves as the foundation for maintaining code quality and consistency across the LTI backend application. All team members should follow these practices to ensure a maintainable, scalable, and testable codebase.
+Este documento sirve como la base para mantener calidad y consistencia de código en toda la aplicación backend del Proyecto Final del Máster AI4Devs. Todos los miembros del equipo deben seguir estas prácticas para asegurar una base de código mantenible, escalable y testeable.

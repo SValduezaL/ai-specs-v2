@@ -1,232 +1,275 @@
-# Data Model Documentation
+# Documentación del Modelo de Datos
 
-This document describes the data model for the LTI (Learning Tracking Initiative) application, including entity descriptions, field definitions, relationships, and an entity-relationship diagram.
+Este documento describe el modelo de datos para el Proyecto Final del Máster AI4Devs, incluyendo descripciones de entidades, definiciones de campos, relaciones y un diagrama entidad-relación.
 
-## Model Descriptions
+**PENDIENTE DE DEFINICIÓN, A GENERAR SEGÚN EJEMPLO INDICADO A CONTINUACIÓN:**
+
+## Descripciones de Modelo
 
 ### 1. Candidate
-Represents a job candidate who can apply for positions within the system.
 
-**Fields:**
-- `id`: Unique identifier for the candidate (Primary Key)
-- `firstName`: Candidate's first name (max 100 characters)
-- `lastName`: Candidate's last name (max 100 characters)
-- `email`: Candidate's unique email address (max 255 characters)
-- `phone`: Candidate's phone number (optional, max 15 characters)
-- `address`: Candidate's address (optional, max 100 characters)
+Representa un candidato de trabajo que puede aplicar a posiciones dentro del sistema.
 
-**Validation Rules:**
-- First name and last name are required, 2-100 characters, letters only
-- Email is required, must be unique, and follow valid email format
-- Phone is optional but must follow Spanish format (6|7|9)XXXXXXXX if provided
-- Address is optional but cannot exceed 100 characters
-- Maximum of 3 education records per candidate
+**Campos:**
 
-**Relationships:**
-- `educations`: One-to-many relationship with Education model
-- `workExperiences`: One-to-many relationship with WorkExperience model
-- `resumes`: One-to-many relationship with Resume model
-- `applications`: One-to-many relationship with Application model
+- `id`: Identificador único para el candidato (Clave Primaria)
+- `firstName`: Primer nombre del candidato (máx 100 caracteres)
+- `lastName`: Apellido del candidato (máx 100 caracteres)
+- `email`: Dirección de email única del candidato (máx 255 caracteres)
+- `phone`: Número de teléfono del candidato (opcional, máx 15 caracteres)
+- `address`: Dirección del candidato (opcional, máx 100 caracteres)
+
+**Reglas de Validación:**
+
+- Primer nombre y apellido son requeridos, 2-100 caracteres, solo letras
+- Email es requerido, debe ser único y seguir formato de email válido
+- Teléfono es opcional pero debe seguir formato español (6|7|9)XXXXXXXX si se proporciona
+- Dirección es opcional pero no puede exceder 100 caracteres
+- Máximo de 3 registros de educación por candidato
+
+**Relaciones:**
+
+- `educations`: Relación uno-a-muchos con el modelo Education
+- `workExperiences`: Relación uno-a-muchos con el modelo WorkExperience
+- `resumes`: Relación uno-a-muchos con el modelo Resume
+- `applications`: Relación uno-a-muchos con el modelo Application
 
 ### 2. Education
-Represents educational background information for candidates.
 
-**Fields:**
-- `id`: Unique identifier for the education record (Primary Key)
-- `institution`: Name of the educational institution (max 100 characters)
-- `title`: Degree or certification title obtained (max 250 characters)
-- `startDate`: Start date of the education period
-- `endDate`: End date of the education period (optional, null if ongoing)
-- `candidateId`: Foreign key referencing the Candidate
+Representa información de antecedentes educativos para candidatos.
 
-**Validation Rules:**
-- Institution is required and cannot exceed 100 characters
-- Title is required and cannot exceed 250 characters
-- Start date is required and must be in valid date format
-- End date is optional but must be valid if provided
-- Maximum of 3 education records per candidate
+**Campos:**
 
-**Relationships:**
-- `candidate`: Many-to-one relationship with Candidate model
+- `id`: Identificador único para el registro de educación (Clave Primaria)
+- `institution`: Nombre de la institución educativa (máx 100 caracteres)
+- `title`: Título de grado o certificación obtenida (máx 250 caracteres)
+- `startDate`: Fecha de inicio del período educativo
+- `endDate`: Fecha de fin del período educativo (opcional, null si está en curso)
+- `candidateId`: Clave foránea que referencia al Candidate
+
+**Reglas de Validación:**
+
+- Institución es requerida y no puede exceder 100 caracteres
+- Título es requerido y no puede exceder 250 caracteres
+- Fecha de inicio es requerida y debe estar en formato de fecha válido
+- Fecha de fin es opcional pero debe ser válida si se proporciona
+- Máximo de 3 registros de educación por candidato
+
+**Relaciones:**
+
+- `candidate`: Relación muchos-a-uno con el modelo Candidate
 
 ### 3. WorkExperience
-Represents work history and professional experience for candidates.
 
-**Fields:**
-- `id`: Unique identifier for the work experience record (Primary Key)
-- `company`: Name of the company or organization (max 100 characters)
-- `position`: Job title or position held (max 100 characters)
-- `description`: Description of responsibilities and achievements (optional, max 200 characters)
-- `startDate`: Start date of the work experience
-- `endDate`: End date of the work experience (optional, null if current)
-- `candidateId`: Foreign key referencing the Candidate
+Representa historial laboral y experiencia profesional para candidatos.
 
-**Validation Rules:**
-- Company name is required and cannot exceed 100 characters
-- Position is required and cannot exceed 100 characters
-- Description is optional but cannot exceed 200 characters if provided
-- Start date is required and must be in valid date format
-- End date is optional but must be valid if provided
+**Campos:**
 
-**Relationships:**
-- `candidate`: Many-to-one relationship with Candidate model
+- `id`: Identificador único para el registro de experiencia laboral (Clave Primaria)
+- `company`: Nombre de la empresa u organización (máx 100 caracteres)
+- `position`: Título de trabajo o posición ocupada (máx 100 caracteres)
+- `description`: Descripción de responsabilidades y logros (opcional, máx 200 caracteres)
+- `startDate`: Fecha de inicio de la experiencia laboral
+- `endDate`: Fecha de fin de la experiencia laboral (opcional, null si es actual)
+- `candidateId`: Clave foránea que referencia al Candidate
+
+**Reglas de Validación:**
+
+- Nombre de empresa es requerido y no puede exceder 100 caracteres
+- Posición es requerida y no puede exceder 100 caracteres
+- Descripción es opcional pero no puede exceder 200 caracteres si se proporciona
+- Fecha de inicio es requerida y debe estar en formato de fecha válido
+- Fecha de fin es opcional pero debe ser válida si se proporciona
+
+**Relaciones:**
+
+- `candidate`: Relación muchos-a-uno con el modelo Candidate
 
 ### 4. Resume
-Represents uploaded resume files associated with candidates.
 
-**Fields:**
-- `id`: Unique identifier for the resume record (Primary Key)
-- `filePath`: File system path to the uploaded resume (max 500 characters)
-- `fileType`: MIME type or file extension of the resume (max 50 characters)
-- `uploadDate`: Date and time when the resume was uploaded
-- `candidateId`: Foreign key referencing the Candidate
+Representa archivos de currículum cargados asociados con candidatos.
 
-**Validation Rules:**
-- File path is required and cannot exceed 500 characters
-- File type is required and cannot exceed 50 characters
-- Upload date is automatically set when file is uploaded
-- Supported file types: PDF and DOCX (max 10MB)
+**Campos:**
 
-**Relationships:**
-- `candidate`: Many-to-one relationship with Candidate model
+- `id`: Identificador único para el registro de currículum (Clave Primaria)
+- `filePath`: Ruta del sistema de archivos al currículum cargado (máx 500 caracteres)
+- `fileType`: Tipo MIME o extensión de archivo del currículum (máx 50 caracteres)
+- `uploadDate`: Fecha y hora cuando se cargó el currículum
+- `candidateId`: Clave foránea que referencia al Candidate
+
+**Reglas de Validación:**
+
+- Ruta de archivo es requerida y no puede exceder 500 caracteres
+- Tipo de archivo es requerido y no puede exceder 50 caracteres
+- Fecha de carga se establece automáticamente cuando se carga el archivo
+- Tipos de archivo soportados: PDF y DOCX (máx 10MB)
+
+**Relaciones:**
+
+- `candidate`: Relación muchos-a-uno con el modelo Candidate
 
 ### 5. Company
-Represents companies that post job positions and employ staff.
 
-**Fields:**
-- `id`: Unique identifier for the company (Primary Key)
-- `name`: Unique company name
+Representa empresas que publican posiciones de trabajo y emplean personal.
 
-**Relationships:**
-- `employees`: One-to-many relationship with Employee model
-- `positions`: One-to-many relationship with Position model
+**Campos:**
+
+- `id`: Identificador único para la empresa (Clave Primaria)
+- `name`: Nombre único de empresa
+
+**Relaciones:**
+
+- `employees`: Relación uno-a-muchos con el modelo Employee
+- `positions`: Relación uno-a-muchos con el modelo Position
 
 ### 6. Employee
-Represents employees within companies who can conduct interviews.
 
-**Fields:**
-- `id`: Unique identifier for the employee (Primary Key)
-- `name`: Employee's full name
-- `email`: Employee's unique email address
-- `role`: Employee's role or job title
-- `isActive`: Boolean indicating if the employee is currently active
-- `companyId`: Foreign key referencing the Company
+Representa empleados dentro de empresas que pueden conducir entrevistas.
 
-**Relationships:**
-- `company`: Many-to-one relationship with Company model
-- `interviews`: One-to-many relationship with Interview model
+**Campos:**
+
+- `id`: Identificador único para el empleado (Clave Primaria)
+- `name`: Nombre completo del empleado
+- `email`: Dirección de email única del empleado
+- `role`: Rol o título de trabajo del empleado
+- `isActive`: Booleano que indica si el empleado está actualmente activo
+- `companyId`: Clave foránea que referencia a Company
+
+**Relaciones:**
+
+- `company`: Relación muchos-a-uno con el modelo Company
+- `interviews`: Relación uno-a-muchos con el modelo Interview
 
 ### 7. InterviewType
-Defines different types of interviews that can be conducted.
 
-**Fields:**
-- `id`: Unique identifier for the interview type (Primary Key)
-- `name`: Name of the interview type (e.g., "Technical", "HR", "Behavioral")
-- `description`: Detailed description of the interview type (optional)
+Define diferentes tipos de entrevistas que pueden conducirse.
 
-**Relationships:**
-- `interviewSteps`: One-to-many relationship with InterviewStep model
+**Campos:**
+
+- `id`: Identificador único para el tipo de entrevista (Clave Primaria)
+- `name`: Nombre del tipo de entrevista (ej., "Technical", "HR", "Behavioral")
+- `description`: Descripción detallada del tipo de entrevista (opcional)
+
+**Relaciones:**
+
+- `interviewSteps`: Relación uno-a-muchos con el modelo InterviewStep
 
 ### 8. InterviewFlow
-Represents a sequence of interview steps that define the hiring process.
 
-**Fields:**
-- `id`: Unique identifier for the interview flow (Primary Key)
-- `description`: Description of the interview flow process (optional)
+Representa una secuencia de pasos de entrevista que definen el proceso de contratación.
 
-**Relationships:**
-- `interviewSteps`: One-to-many relationship with InterviewStep model
-- `positions`: One-to-many relationship with Position model
+**Campos:**
+
+- `id`: Identificador único para el flujo de entrevista (Clave Primaria)
+- `description`: Descripción del proceso de flujo de entrevista (opcional)
+
+**Relaciones:**
+
+- `interviewSteps`: Relación uno-a-muchos con el modelo InterviewStep
+- `positions`: Relación uno-a-muchos con el modelo Position
 
 ### 9. InterviewStep
-Represents individual steps within an interview flow.
 
-**Fields:**
-- `id`: Unique identifier for the interview step (Primary Key)
-- `name`: Name of the interview step
-- `orderIndex`: Numeric order of this step within the flow
-- `interviewFlowId`: Foreign key referencing the InterviewFlow
-- `interviewTypeId`: Foreign key referencing the InterviewType
+Representa pasos individuales dentro de un flujo de entrevista.
 
-**Relationships:**
-- `interviewFlow`: Many-to-one relationship with InterviewFlow model
-- `interviewType`: Many-to-one relationship with InterviewType model
-- `applications`: One-to-many relationship with Application model
-- `interviews`: One-to-many relationship with Interview model
+**Campos:**
+
+- `id`: Identificador único para el paso de entrevista (Clave Primaria)
+- `name`: Nombre del paso de entrevista
+- `orderIndex`: Orden numérico de este paso dentro del flujo
+- `interviewFlowId`: Clave foránea que referencia al InterviewFlow
+- `interviewTypeId`: Clave foránea que referencia al InterviewType
+
+**Relaciones:**
+
+- `interviewFlow`: Relación muchos-a-uno con el modelo InterviewFlow
+- `interviewType`: Relación muchos-a-uno con el modelo InterviewType
+- `applications`: Relación uno-a-muchos con el modelo Application
+- `interviews`: Relación uno-a-muchos con el modelo Interview
 
 ### 10. Position
-Represents job positions available for application.
 
-**Fields:**
-- `id`: Unique identifier for the position (Primary Key)
-- `companyId`: Foreign key referencing the Company (required)
-- `interviewFlowId`: Foreign key referencing the InterviewFlow (required)
-- `title`: Job title (required, max 100 characters)
-- `description`: Brief description of the position (required)
-- `status`: Current status of the position (default: "Draft", valid values: Open, Contratado, Cerrado, Borrador)
-- `isVisible`: Boolean indicating if the position is publicly visible (default: false)
-- `location`: Job location (required)
-- `jobDescription`: Detailed job description (required)
-- `requirements`: Job requirements and qualifications (optional)
-- `responsibilities`: Job responsibilities (optional)
-- `salaryMin`: Minimum salary range (optional, must be >= 0)
-- `salaryMax`: Maximum salary range (optional, must be >= 0 and >= salaryMin)
-- `employmentType`: Type of employment (e.g., "Full-time", "Part-time", "Contract") (optional)
-- `benefits`: Job benefits description (optional)
-- `companyDescription`: Description of the hiring company (optional)
-- `applicationDeadline`: Deadline for applications (optional, must be a future date)
-- `contactInfo`: Contact information for inquiries (optional)
+Representa posiciones de trabajo disponibles para aplicación.
 
-**Validation Rules:**
-- Title is required and cannot exceed 100 characters
-- Description, location, and jobDescription are required fields
-- Status must be one of: Open, Contratado, Cerrado, Borrador
-- Company and interview flow references must exist in the database
-- Salary values must be non-negative numbers
-- Application deadline must be a future date if provided
+**Campos:**
 
-**Relationships:**
-- `company`: Many-to-one relationship with Company model
-- `interviewFlow`: Many-to-one relationship with InterviewFlow model
-- `applications`: One-to-many relationship with Application model
+- `id`: Identificador único para la posición (Clave Primaria)
+- `companyId`: Clave foránea que referencia a Company (requerido)
+- `interviewFlowId`: Clave foránea que referencia al InterviewFlow (requerido)
+- `title`: Título del trabajo (requerido, máx 100 caracteres)
+- `description`: Breve descripción de la posición (requerido)
+- `status`: Estado actual de la posición (predeterminado: "Draft", valores válidos: Open, Contratado, Cerrado, Borrador)
+- `isVisible`: Booleano que indica si la posición es públicamente visible (predeterminado: false)
+- `location`: Ubicación del trabajo (requerido)
+- `jobDescription`: Descripción detallada del trabajo (requerido)
+- `requirements`: Requisitos y calificaciones del trabajo (opcional)
+- `responsibilities`: Responsabilidades del trabajo (opcional)
+- `salaryMin`: Rango mínimo de salario (opcional, debe ser >= 0)
+- `salaryMax`: Rango máximo de salario (opcional, debe ser >= 0 y >= salaryMin)
+- `employmentType`: Tipo de empleo (ej., "Full-time", "Part-time", "Contract") (opcional)
+- `benefits`: Descripción de beneficios del trabajo (opcional)
+- `companyDescription`: Descripción de la empresa contratante (opcional)
+- `applicationDeadline`: Fecha límite para aplicaciones (opcional, debe ser una fecha futura)
+- `contactInfo`: Información de contacto para consultas (opcional)
+
+**Reglas de Validación:**
+
+- Título es requerido y no puede exceder 100 caracteres
+- Descripción, ubicación y jobDescription son campos requeridos
+- Estado debe ser uno de: Open, Contratado, Cerrado, Borrador
+- Referencias de empresa y flujo de entrevista deben existir en la base de datos
+- Valores de salario deben ser números no negativos
+- Fecha límite de aplicación debe ser una fecha futura si se proporciona
+
+**Relaciones:**
+
+- `company`: Relación muchos-a-uno con el modelo Company
+- `interviewFlow`: Relación muchos-a-uno con el modelo InterviewFlow
+- `applications`: Relación uno-a-muchos con el modelo Application
 
 ### 11. Application
-Represents a candidate's application to a specific position.
 
-**Fields:**
-- `id`: Unique identifier for the application (Primary Key)
-- `applicationDate`: Date when the application was submitted
-- `currentInterviewStep`: Current step in the interview process
-- `notes`: Additional notes about the application (optional)
-- `positionId`: Foreign key referencing the Position
-- `candidateId`: Foreign key referencing the Candidate
-- `interviewStepId`: Foreign key referencing the current InterviewStep
+Representa la aplicación de un candidato a una posición específica.
 
-**Relationships:**
-- `position`: Many-to-one relationship with Position model
-- `candidate`: Many-to-one relationship with Candidate model
-- `interviewStep`: Many-to-one relationship with InterviewStep model
-- `interviews`: One-to-many relationship with Interview model
+**Campos:**
+
+- `id`: Identificador único para la aplicación (Clave Primaria)
+- `applicationDate`: Fecha cuando se envió la aplicación
+- `currentInterviewStep`: Paso actual en el proceso de entrevista
+- `notes`: Notas adicionales sobre la aplicación (opcional)
+- `positionId`: Clave foránea que referencia a Position
+- `candidateId`: Clave foránea que referencia a Candidate
+- `interviewStepId`: Clave foránea que referencia al InterviewStep actual
+
+**Relaciones:**
+
+- `position`: Relación muchos-a-uno con el modelo Position
+- `candidate`: Relación muchos-a-uno con el modelo Candidate
+- `interviewStep`: Relación muchos-a-uno con el modelo InterviewStep
+- `interviews`: Relación uno-a-muchos con el modelo Interview
 
 ### 12. Interview
-Represents individual interview sessions conducted as part of an application.
 
-**Fields:**
-- `id`: Unique identifier for the interview (Primary Key)
-- `interviewDate`: Date and time of the interview
-- `result`: Interview result or outcome (optional)
-- `score`: Numeric score or rating from the interview (optional)
-- `notes`: Interview notes and feedback (optional)
-- `applicationId`: Foreign key referencing the Application
-- `interviewStepId`: Foreign key referencing the InterviewStep
-- `employeeId`: Foreign key referencing the conducting Employee
+Representa sesiones individuales de entrevista conducidas como parte de una aplicación.
 
-**Relationships:**
-- `application`: Many-to-one relationship with Application model
-- `interviewStep`: Many-to-one relationship with InterviewStep model
-- `employee`: Many-to-one relationship with Employee model
+**Campos:**
 
-## Entity Relationship Diagram
+- `id`: Identificador único para la entrevista (Clave Primaria)
+- `interviewDate`: Fecha y hora de la entrevista
+- `result`: Resultado o desenlace de la entrevista (opcional)
+- `score`: Puntuación numérica o calificación de la entrevista (opcional)
+- `notes`: Notas de entrevista y retroalimentación (opcional)
+- `applicationId`: Clave foránea que referencia a Application
+- `interviewStepId`: Clave foránea que referencia al InterviewStep
+- `employeeId`: Clave foránea que referencia al Employee conductor
+
+**Relaciones:**
+
+- `application`: Relación muchos-a-uno con el modelo Application
+- `interviewStep`: Relación muchos-a-uno con el modelo InterviewStep
+- `employee`: Relación muchos-a-uno con el modelo Employee
+
+## Diagrama Entidad-Relación
 
 ```mermaid
 erDiagram
@@ -334,39 +377,39 @@ erDiagram
     Candidate ||--o{ WorkExperience : "has"
     Candidate ||--o{ Resume : "has"
     Candidate ||--o{ Application : "submits"
-    
+
     Company ||--o{ Employee : "employs"
     Company ||--o{ Position : "offers"
-    
+
     InterviewType ||--o{ InterviewStep : "defines"
     InterviewFlow ||--o{ InterviewStep : "includes"
     InterviewFlow ||--o{ Position : "guides"
-    
+
     Position ||--o{ Application : "receives"
     Application ||--o{ Interview : "includes"
-    
+
     InterviewStep ||--o{ Application : "current_step"
     InterviewStep ||--o{ Interview : "conducted_at"
-    
+
     Employee ||--o{ Interview : "conducts"
 ```
 
-## Key Design Principles
+## Principios Clave de Diseño
 
-1. **Referential Integrity**: All foreign key relationships ensure data consistency across the system.
+1. **Integridad Referencial**: Todas las relaciones de claves foráneas aseguran consistencia de datos a través del sistema.
 
-2. **Flexibility**: The interview flow system allows for customizable hiring processes per position.
+2. **Flexibilidad**: El sistema de flujo de entrevista permite procesos de contratación personalizables por posición.
 
-3. **Audit Trail**: Application and interview dates provide a complete timeline of the hiring process.
+3. **Rastro de Auditoría**: Las fechas de aplicación y entrevista proporcionan una línea de tiempo completa del proceso de contratación.
 
-4. **Extensibility**: The modular design allows for easy addition of new features and data points.
+4. **Extensibilidad**: El diseño modular permite fácil adición de nuevas funcionalidades y puntos de datos.
 
-5. **Data Normalization**: The model follows database normalization principles to minimize redundancy and ensure data integrity.
+5. **Normalización de Datos**: El modelo sigue principios de normalización de base de datos para minimizar redundancia y asegurar integridad de datos.
 
-## Notes
+## Notas
 
-- All `id` fields serve as primary keys with auto-increment functionality
-- Foreign key relationships maintain referential integrity
-- Optional fields allow for flexible data entry while maintaining required core information
-- The interview system supports multi-step hiring processes with different types of interviews
-- Email fields have unique constraints to prevent duplicate accounts 
+- Todos los campos `id` sirven como claves primarias con funcionalidad de auto-incremento
+- Las relaciones de clave foránea mantienen integridad referencial
+- Los campos opcionales permiten entrada de datos flexible mientras mantienen información central requerida
+- El sistema de entrevista soporta procesos de contratación de múltiples pasos con diferentes tipos de entrevistas
+- Los campos de email tienen restricciones únicas para prevenir cuentas duplicadas

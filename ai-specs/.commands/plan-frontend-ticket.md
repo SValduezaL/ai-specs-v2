@@ -1,131 +1,147 @@
-# Role
+# Rol
 
-You are an expert frontend architect with extensive experience in React projects applying best practices.
+Eres un arquitecto frontend experto con amplia experiencia en proyectos React aplicando mejores prácticas.
 
-# Ticket ID
+# ID del Ticket
 
-$ARGUMENTS
+    $ARGUMENTS
 
-# Goal
+# Objetivo
 
-Obtain a step-by-step plan for a Jira ticket that is ready to start implementing.
+Obtener un plan paso a paso para un ticket de Jira que esté listo para comenzar a implementar.
 
-# Process and rules
+# Proceso y reglas
 
-1. Adopt the role of `.claude/agents/frontend-developer.md`
-2. Analyze the Jira ticket mentioned in #ticket using the MCP. If the mention is a local file, then avoid using MCP
-3. Propose a step-by-step plan for the frontend part, taking into account everything mentioned in the ticket and applying the project's best practices and rules you can find in `/ai-specs/specs`.
-4. Apply the best practices of your role to ensure the developer can be fully autonomous and implement the ticket end-to-end using only your plan.
-5. Do not write code yet; provide only the plan in the output format defined below.
-6. If you are asked to start implementing at some point, make sure the first thing you do is to move to a branch named after the ticket id (if you are not yet there) and follow the process described in the command /develop-us.md
+1. Adopta el rol de `ai-specs/.agents/frontend-developer.md`
+2. Si tienes instalado MCP de Jira, analiza el ticket de Jira mencionado en #ticket usando el MCP. Si la mención es un archivo local, entonces evita usar MCP
+3. Propón un plan paso a paso para la parte frontend, teniendo en cuenta todo lo mencionado en el ticket y aplicando las mejores prácticas y reglas del proyecto que puedes encontrar en `ai-specs/specs`.
+4. Aplica las mejores prácticas de tu rol para asegurar que el desarrollador pueda ser completamente autónomo e implementar el ticket de principio a fin usando solo tu plan.
+5. No escribas código todavía; proporciona solo el plan en el formato de salida definido abajo.
+6. Si se te pide comenzar a implementar en algún punto, asegúrate de que lo primero que hagas sea moverte a una rama nombrada según el id del ticket (si no estás allí todavía) y seguir el proceso descrito en el comando /develop-us.md
 
-# Output format
+# Formato de salida
 
-Markdown document at the path `ai-specs/changes/[jira_id]_frontend.md` containing the complete implementation details.
-Follow this template:
+Documento Markdown en la ruta `ai-specs/changes/[ticket_id]_frontend.md` conteniendo los detalles completos de implementación.
+Sigue esta plantilla:
 
-## Frontend Implementation Plan Ticket Template Structure
+## Estructura de Plantilla de Plan de Implementación Frontend del Ticket
 
-### 1. **Header**
-- Title: `# Frontend Implementation Plan: [TICKET-ID] [Feature Name]`
+### 1. **Encabezado**
 
-### 2. **Overview**
-- Brief description of the feature and frontend architecture principles (component-based architecture, service layer, React patterns)
+- Título: `# Plan de Implementación Frontend: [TICKET-ID] [Nombre de Funcionalidad]`
 
-### 3. **Architecture Context**
-- Components/services involved
-- Files referenced
-- Routing considerations (if applicable)
-- State management approach
+### 2. **Visión General**
 
-### 4. **Implementation Steps**
-Detailed steps, typically:
+- Breve descripción de la funcionalidad y principios de arquitectura frontend (arquitectura basada en componentes, capa de servicio, patrones React)
 
-#### **Step 0: Create Feature Branch**
-- **Action**: Create and switch to a new feature branch following the development workflow. Check if it exists and if not, create it
-- **Branch Naming**: Follow the project's branch naming convention (`feature/[ticket-id]-frontend`, make it required to use this naming, don't allow to keep on the general task [ticket-id] if it exists to separate concerns)
-- **Implementation Steps**:
-  1. Ensure you're on the latest `main` or `develop` branch (or appropriate base branch)
-  2. Pull latest changes: `git pull origin [base-branch]`
-  3. Create new branch: `git checkout -b [branch-name]`
-  4. Verify branch creation: `git branch`
-- **Notes**: This must be the FIRST step before any code changes. Refer to `ai-specs/specs/frontend-standards.mdc` section "Development Workflow" for specific branch naming conventions and workflow rules.
+### 3. **Contexto de Arquitectura**
 
-#### **Step N: [Action Name]**
-- **File**: Target file path
-- **Action**: What to implement
-- **Function/Component Signature**: Code signature
-- **Implementation Steps**: Numbered list
-- **Dependencies**: Required imports
-- **Implementation Notes**: Technical details
+- Componentes/servicios involucrados
+- Archivos referenciados
+- Consideraciones de enrutamiento (si aplica)
+- Enfoque de gestión de estado
 
-Common steps:
-- **Step 1**: Update/Create Service Methods (API communication in `src/services/`)
-- **Step 2**: Create/Update Components (React components in `src/components/`)
-- **Step 3**: Update Routing (if new pages/routes needed in `src/App.js`)
-- **Step 4**: Write Cypress E2E Tests (test files in `cypress/e2e/`)
+### 4. **Pasos de Implementación**
 
-#### **Step N+1: Update Technical Documentation**
-- **Action**: Review and update technical documentation according to changes made
-- **Implementation Steps**:
-  1. **Review Changes**: Analyze all code changes made during implementation
-  2. **Identify Documentation Files**: Determine which documentation files need updates based on:
-     - API endpoint changes → Update `ai-specs/specs/api-spec.yml`
-     - UI/UX patterns or component patterns → Update `ai-specs/specs/frontend-standards.mdc`
-     - Routing changes → Update routing documentation
-     - New dependencies or configuration changes → Update `ai-specs/specs/frontend-standards.mdc`
-     - Test patterns or Cypress changes → Update testing documentation
-  3. **Update Documentation**: For each affected file:
-     - Update content in English (as per `documentation-standards.mdc`)
-     - Maintain consistency with existing documentation structure
-     - Ensure proper formatting
-  4. **Verify Documentation**: 
-     - Confirm all changes are accurately reflected
-     - Check that documentation follows established structure
-  5. **Report Updates**: Document which files were updated and what changes were made
-- **References**: 
-  - Follow process described in `ai-specs/specs/documentation-standards.mdc`
-  - All documentation must be written in English
-- **Notes**: This step is MANDATORY before considering the implementation complete. Do not skip documentation updates.
+Pasos detallados, típicamente:
 
-### 5. **Implementation Order**
-- Numbered list of steps in sequence (must start with Step 0: Create Feature Branch and end with documentation update step)
+#### **Paso 0: Crear Rama de Funcionalidad**
 
-### 6. **Testing Checklist**
-- Post-implementation verification checklist
-- Cypress E2E test coverage
-- Component functionality verification
-- Error handling verification
+- **Acción**: Crear y cambiar a una nueva rama de funcionalidad siguiendo el flujo de trabajo de desarrollo. Verifica si existe y si no, créala
+- **Nomenclatura de Rama**: Sigue la convención de nomenclatura de ramas del proyecto (`feature/[ticket-id]-frontend`, hazlo obligatorio usar esta nomenclatura, no permitas quedarse en la tarea general [ticket-id] si existe para separar preocupaciones)
+- **Pasos de Implementación**:
+    1. Asegura que estás en la última rama `main` o `develop` (o rama base apropiada)
+    2. Obtén últimos cambios: `git pull origin [base-branch]`
+    3. Crea nueva rama: `git checkout -b [branch-name]`
+    4. Verifica creación de rama: `git branch`
+- **Notas**: Este debe ser el PRIMER paso antes de cualquier cambio de código. Consulta la sección "Development Workflow" de `ai-specs/specs/frontend-standards.mdc` para convenciones específicas de nomenclatura de ramas y reglas de flujo de trabajo.
 
-### 7. **Error Handling Patterns**
-- Error state management in components
-- User-friendly error messages
-- API error handling in services
+#### **Paso N: [Nombre de Acción]**
 
-### 8. **UI/UX Considerations** (if applicable)
-- Bootstrap component usage
-- Responsive design considerations
-- Accessibility requirements
-- Loading states and feedback
+- **Archivo**: Ruta del archivo objetivo
+- **Acción**: Qué implementar
+- **Firma de Función/Componente**: Firma de código
+- **Pasos de Implementación**: Lista numerada
+- **Dependencias**: Imports requeridos
+- **Notas de Implementación**: Detalles técnicos
 
-### 9. **Dependencies**
-- External libraries and tools required
-- React Bootstrap components used
-- Third-party packages (if any)
+Pasos comunes:
 
-### 10. **Notes**
-- Important reminders and constraints
-- Business rules
-- Language requirements (English only)
-- TypeScript vs JavaScript considerations
+- **Paso 1**: Actualizar/Crear Métodos de Servicio (comunicación con API en `src/services/`)
+- **Paso 2**: Crear/Actualizar Componentes (componentes React en `src/components/`)
+- **Paso 3**: Actualizar Enrutamiento (si se necesitan nuevas páginas/rutas en `src/App.js`)
+- **Paso 4**: Escribir Pruebas E2E de Playwright (archivos de prueba en `playwright/e2e/`)
 
-### 11. **Next Steps After Implementation**
-- Post-implementation tasks (documentation is already covered in Step N+1, but may include integration, deployment, etc.)
+#### **Paso N+1: Actualizar Documentación Técnica**
 
-### 12. **Implementation Verification**
-- Final verification checklist:
-  - Code Quality
-  - Functionality
-  - Testing
-  - Integration
-  - Documentation updates completed
+- **Acción**: Revisar y actualizar documentación técnica según cambios realizados
+- **Pasos de Implementación**:
+    1. **Revisar Cambios**: Analizar todos los cambios de código realizados durante la implementación
+    2. **Identificar Archivos de Documentación**: Determinar qué archivos de documentación necesitan actualizaciones basándose en:
+        - Cambios en endpoint de API → Actualizar `ai-specs/specs/api-spec.yml`
+        - Patrones UI/UX o patrones de componentes → Actualizar `ai-specs/specs/frontend-standards.mdc`
+        - Cambios en enrutamiento → Actualizar documentación de enrutamiento
+        - Nuevas dependencias o cambios de configuración → Actualizar `ai-specs/specs/frontend-standards.mdc`
+        - Patrones de prueba o cambios en Playwright → Actualizar documentación de pruebas
+    3. **Actualizar Documentación**: Para cada archivo afectado:
+        - Actualizar contenido en español (según `documentation-standards.mdc`)
+        - Mantener consistencia con estructura de documentación existente
+        - Asegurar formato apropiado
+    4. **Verificar Documentación**:
+        - Confirmar que todos los cambios están reflejados con precisión
+        - Verificar que la documentación siga la estructura establecida
+    5. **Reportar Actualizaciones**: Documentar qué archivos fueron actualizados y qué cambios se hicieron
+- **Referencias**:
+    - Seguir proceso descrito en `ai-specs/specs/documentation-standards.mdc`
+    - Toda la documentación debe escribirse en español
+- **Notas**: Este paso es OBLIGATORIO antes de considerar la implementación completa. No omitas actualizaciones de documentación.
+
+### 5. **Orden de Implementación**
+
+- Lista numerada de pasos en secuencia (debe comenzar con Paso 0: Crear Rama de Funcionalidad y terminar con paso de actualización de documentación)
+
+### 6. **Lista de Verificación de Pruebas**
+
+- Lista de verificación de verificación post-implementación
+- Cobertura de pruebas E2E de Playwright
+- Verificación de funcionalidad de componentes
+- Verificación de manejo de errores
+
+### 7. **Patrones de Manejo de Errores**
+
+- Gestión de estado de error en componentes
+- Mensajes de error amigables para el usuario
+- Manejo de errores de API en servicios
+
+### 8. **Consideraciones de UI/UX** (si aplica)
+
+- Uso de componentes Bootstrap
+- Consideraciones de diseño responsivo
+- Requisitos de accesibilidad
+- Estados de carga y retroalimentación
+
+### 9. **Dependencias**
+
+- Bibliotecas y herramientas externas requeridas
+- Componentes React Bootstrap usados
+- Paquetes de terceros (si hay)
+
+### 10. **Notas**
+
+- Recordatorios importantes y restricciones
+- Reglas de negocio
+- Requisitos de lenguaje
+- Consideraciones TypeScript vs JavaScript
+
+### 11. **Próximos Pasos Después de Implementación**
+
+- Tareas post-implementación (la documentación ya está cubierta en Paso N+1, pero puede incluir integración, despliegue, etc.)
+
+### 12. **Verificación de Implementación**
+
+- Lista de verificación final:
+    - Calidad de Código
+    - Funcionalidad
+    - Pruebas
+    - Integración
+    - Actualizaciones de documentación completadas

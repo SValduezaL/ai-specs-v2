@@ -1,300 +1,301 @@
-# AI Specifications & Development Rules
+# Especificaciones de IA y Reglas de Desarrollo
 
-This repository contains a comprehensive set of development rules, standards, and AI agent configurations designed to work seamlessly with multiple AI coding copilots. The setup is portable and can be imported into any project to provide consistent, high-quality AI-assisted development.
+Este repositorio contiene un conjunto integral de reglas de desarrollo, estándares y configuraciones de agentes de IA diseñadas para funcionar sin problemas con múltiples copilots de codificación de IA. La configuración es portable y puede importarse a cualquier proyecto para proporcionar desarrollo asistido por IA consistente y de alta calidad.
 
-## 📁 Repository Structure
+## 📁 Estructura del Repositorio
 
 ```
 .
-├── ai-specs/                    # Main directory with all rules and configurations
-│   ├── specs/                   # Development standards and specifications
-│   │   ├── base-standards.mdc   # Core development rules (single source of truth)
+├── ai-specs/                    # Directorio principal con todas las reglas y configuraciones
+│   ├── specs/                   # Estándares y especificaciones de desarrollo
+│   │   ├── base-standards.mdc   # Reglas centrales de desarrollo (fuente única de verdad)
 │   │   ├── backend-standards.mdc
 │   │   ├── frontend-standards.mdc
 │   │   ├── documentation-standards.mdc
-│   │   ├── api-spec.yml         # OpenAPI specification
-│   │   ├── data-model.md        # Database and domain models
+│   │   ├── api-spec.yml         # Especificación OpenAPI
+│   │   ├── data-model.md        # Modelos de base de datos y dominio
 │   │   ├── development_guide.md
-│   │   └── prompts.md           # Reusable prompt templates
-│   └── changes/                 # Feature implementation plans
-│       └── SCRUM-10_backend.md  # Demo: Position update feature plan
+│   │   └── prompts.md           # Plantillas de prompts reutilizables
+│   └── changes/                 # Planes de implementación de funcionalidades
+│       └── SCRUM-10_backend.md  # Demo: Plan de funcionalidad de actualización de posición
 │
-├── AGENTS.md                    # Generic agent configuration
-├── CLAUDE.md                    # Claude-specific configuration
-├── codex.md                     # GitHub Copilot/Codex configuration
-└── GEMINI.md                    # Gemini-specific configuration
+├── AGENTS.md                    # Configuración genérica de agente
+├── CLAUDE.md                    # Configuración específica de Claude
+├── codex.md                     # Configuración de GitHub Copilot/Codex
+└── GEMINI.md                    # Configuración específica de Gemini
 ```
 
-## 🤖 Multi-Copilot Support
+## 🤖 Soporte Multi-Copilot
 
-This repository uses **symbolic links** or **naming conventions** to support multiple AI coding copilots without duplication:
+Este repositorio utiliza **enlaces simbólicos** o **convenciones de nomenclatura** para soportar múltiples copilots de codificación de IA sin duplicación:
 
-- **`AGENTS.md`** → Generic agent rules (works with most copilots)
-- **`CLAUDE.md`** → Optimized for Claude/Cursor
-- **`codex.md`** → Optimized for GitHub Copilot/Codex
-- **`GEMINI.md`** → Optimized for Google Gemini
+- **`AGENTS.md`** → Reglas genéricas de agente (funciona con la mayoría de copilots)
+- **`CLAUDE.md`** → Optimizado para Claude/Cursor
+- **`codex.md`** → Optimizado para GitHub Copilot/Codex
+- **`GEMINI.md`** → Optimizado para Google Gemini
 
-All these files reference the same core rules in `ai-specs/specs/base-standards.mdc`, ensuring consistency across different AI tools while allowing copilot-specific customizations.
+Todos estos archivos referencian las mismas reglas centrales en `ai-specs/specs/base-standards.mdc`, asegurando consistencia entre diferentes herramientas de IA mientras permiten personalizaciones específicas del copilot.
 
-### Why This Approach?
+### ¿Por Qué Este Enfoque?
 
-✅ **Single Source of Truth**: Core rules maintained in one place (`base-standards.mdc`)  
-✅ **Copilot Compatibility**: Each AI tool finds its configuration using its preferred naming convention  
-✅ **Zero Configuration**: Import into a new project and it works immediately  
-✅ **Easy Updates**: Update rules once, all copilots benefit  
-✅ **Portable**: Copy this structure to any project  
+✅ **Fuente Única de Verdad**: Reglas centrales mantenidas en un solo lugar (`base-standards.mdc`)  
+✅ **Compatibilidad con Copilots**: Cada herramienta de IA encuentra su configuración usando su convención de nomenclatura preferida  
+✅ **Configuración Cero**: Importa a un nuevo proyecto y funciona inmediatamente  
+✅ **Actualizaciones Fáciles**: Actualiza las reglas una vez, todos los copilots se benefician  
+✅ **Portable**: Copia esta estructura a cualquier proyecto  
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
-### 1. Import Into Your Project
+### 1. Importar a Tu Proyecto
 
 ```bash
-# Clone or copy this repository into your project
+# Clona o copia este repositorio en tu proyecto
 cp -r LIDR-ai-specs/* your-project/
 
-# The AI copilot will automatically detect the relevant configuration file
+# El copilot de IA detectará automáticamente el archivo de configuración relevante
 ```
 
-### 2. Verify Configuration
+### 2. Verificar Configuración
 
-Your AI copilot will automatically load:
+Tu copilot de IA cargará automáticamente:
 - **Claude/Cursor**: `CLAUDE.md` → `ai-specs/specs/base-standards.mdc`
 - **GitHub Copilot**: `codex.md` → `ai-specs/specs/base-standards.mdc`
 - **Gemini**: `GEMINI.md` → `ai-specs/specs/base-standards.mdc`
 
-All paths and rules are configured to work seamlessly without manual adjustments.
+Todas las rutas y reglas están configuradas para funcionar sin problemas sin ajustes manuales.
 
-## 💡 Usage: Command-Based Development Workflow
+## 💡 Uso: Flujo de Trabajo Basado en Comandos
 
-The most efficient way to work with this setup is using a command-based workflow:
+La forma más eficiente de trabajar con esta configuración es usando un flujo de trabajo basado en comandos:
 
-### Step 1: Enrich the User Story (Optional)
+### Paso 1: Enriquecer la Historia de Usuario (Opcional)
 
-If your user story lacks detail or acceptance criteria, use the **`enrich-us`** command to enhance it:
+Si tu historia de usuario carece de detalle o criterios de aceptación, usa el comando **`enrich-us`** para mejorarla:
 
 ```
 /enrich-us SCRUM-10
 ```
 
-This command analyzes the user story and generates:
-- Detailed acceptance criteria
-- Edge cases and validation rules
-- Technical considerations
-- Testing scenarios
+Este comando analiza la historia de usuario y genera:
+- Criterios de aceptación detallados
+- Casos extremos y reglas de validación
+- Consideraciones técnicas
+- Escenarios de prueba
 
-**Note**: Skip this step if your user story already has sufficient depth and clear requirements.
+**Nota**: Omite este paso si tu historia de usuario ya tiene suficiente profundidad y requisitos claros.
 
-### Step 2: Plan the Feature
+### Paso 2: Planificar la Funcionalidad
 
-Use **`plan-ticket`** commands to generate detailed implementation plans:
+Usa comandos **`plan-ticket`** para generar planes de implementación detallados:
 
 ```
 plan-backend-ticket SCRUM-10
 ```
 
-or
+o
 
 ```
 plan-frontend-ticket SCRUM-15
 ```
 
-This creates a comprehensive, step-by-step implementation plan in `ai-specs/changes/`.
+Esto crea un plan de implementación exhaustivo, paso a paso, en `ai-specs/changes/`.
 
-### Step 3: Implement the Feature
+### Paso 3: Implementar la Funcionalidad
 
-Reference the generated plan and execute:
+Referencia el plan generado y ejecuta:
 
 ```
 develop-backend @SCRUM-10_backend.md
 ```
 
-or
+o
 
 ```
 develop-frontend @SCRUM-15_frontend.md
 ```
 
-The AI will follow the plan precisely, implementing each step with TDD, proper testing, and documentation updates.
+La IA seguirá el plan precisamente, implementando cada paso con TDD, pruebas adecuadas y actualizaciones de documentación.
 
-### Example: Implementing SCRUM-10 (Position Update Feature)
+### Ejemplo: Implementando SCRUM-10 (Funcionalidad de Actualización de Posición)
 
-#### Step 1: Enrich the User Story (Optional)
+#### Paso 1: Enriquecer la Historia de Usuario (Opcional)
 
-**You say:**
+**Tú dices:**
 ```
 /enrich-us SCRUM-10
 ```
 
-**AI enhances** the user story with detailed acceptance criteria and technical considerations (skip if already detailed).
+**La IA mejora** la historia de usuario con criterios de aceptación detallados y consideraciones técnicas (omite si ya está detallada).
 
-#### Step 2: Generate the Plan
+#### Paso 2: Generar el Plan
 
-**You say:**
+**Tú dices:**
 ```
 /plan-backend-ticket SCRUM-10
 ```
 
-**AI generates:**
-- Analyzes the ticket requirements
-- Creates `ai-specs/changes/SCRUM-10_backend.md` with:
-  - Architecture context
-  - Step-by-step implementation instructions
-  - Complete test specifications (validation, service, controller layers)
-  - API documentation updates
-  - Validation rules
-  - Error handling strategies
+**La IA genera:**
+- Analiza los requisitos del ticket
+- Crea `ai-specs/changes/SCRUM-10_backend.md` con:
+  - Contexto de arquitectura
+  - Instrucciones de implementación paso a paso
+  - Especificaciones completas de pruebas (capas de validación, servicio, controlador)
+  - Actualizaciones de documentación de API
+  - Reglas de validación
+  - Estrategias de manejo de errores
 
-#### Step 3: Implement Following the Plan
+#### Paso 3: Implementar Siguiendo el Plan
 
-**You say:**
+**Tú dices:**
 ```
 /develop-backend @SCRUM-10_backend.md
 ```
 
-**AI executes:**
-1. Creates feature branch `feature/SCRUM-10-backend`
-2. Implements validation function with comprehensive rules
-3. Implements service layer with business logic
-4. Implements controller with HTTP handling
-5. Adds route configuration
-6. Writes 90%+ test coverage across all layers
-7. Updates API documentation
-8. Runs tests and verifies implementation
-9. Commits and pushes (configurable to wait until confirmation)
+**La IA ejecuta:**
+1. Crea rama de funcionalidad `feature/SCRUM-10-backend`
+2. Implementa función de validación con reglas exhaustivas
+3. Implementa capa de servicio con lógica de negocio
+4. Implementa controlador con manejo HTTP
+5. Añade configuración de rutas
+6. Escribe cobertura de pruebas de 90%+ en todas las capas
+7. Actualiza documentación de API
+8. Ejecuta pruebas y verifica implementación
+9. Hace commit y push (configurable para esperar hasta confirmación)
 
-### 📝 Demo Enriched User Story
+### 📝 Demo de Historia de Usuario Enriquecida
 
-Check out **`ai-specs/changes/SCRUM-10-Position-Update.md`** for a complete example of what an enriched user story looks like. This comprehensive document includes:
+Consulta **`ai-specs/changes/SCRUM-10-Position-Update.md`** para un ejemplo completo de cómo se ve una historia de usuario enriquecida. Este documento integral incluye:
 
-- **User Story**: Clear description with persona, goal, and benefit
-- **Technical Specification**: Complete technical implementation details
-- **API Endpoint Documentation**: Request/response formats, status codes, and error handling
-- **Database Fields**: All updateable fields with validation rules
-- **Validation Rules**: Server-side and client-side validation requirements
-- **Security Requirements**: Authentication, authorization, and input sanitization needs
-- **Testing Requirements**: Unit tests, integration tests, and manual testing scenarios
-- **Acceptance Criteria**: Clear, testable acceptance criteria for each requirement
-- **Non-Functional Requirements**: Usability, performance, reliability, and security standards
-- **Definition of Done**: Complete checklist for feature completion
+- **Historia de Usuario**: Descripción clara con persona, objetivo y beneficio
+- **Especificación Técnica**: Detalles completos de implementación técnica
+- **Documentación de Endpoint de API**: Formatos de petición/respuesta, códigos de estado y manejo de errores
+- **Campos de Base de Datos**: Todos los campos actualizables con reglas de validación
+- **Reglas de Validación**: Requisitos de validación del lado del servidor y del cliente
+- **Requisitos de Seguridad**: Necesidades de autenticación, autorización y sanitización de entrada
+- **Requisitos de Pruebas**: Pruebas unitarias, pruebas de integración y escenarios de pruebas manuales
+- **Criterios de Aceptación**: Criterios de aceptación claros y verificables para cada requisito
+- **Requisitos No Funcionales**: Estándares de usabilidad, rendimiento, fiabilidad y seguridad
+- **Definición de Terminado**: Lista de verificación completa para la finalización de la funcionalidad
 
-This enriched document transforms a simple user story into a detailed specification that provides all the context needed for autonomous implementation by AI agents or developers.
+Este documento enriquecido transforma una historia de usuario simple en una especificación detallada que proporciona todo el contexto necesario para implementación autónoma por agentes de IA o desarrolladores.
 
-### 📋 Demo Implementation Plan
+### 📋 Demo de Plan de Implementación
 
-Check out **`ai-specs/changes/SCRUM-10_backend.md`** for a complete example of what a feature implementation plan looks like. This comprehensive plan includes:
+Consulta **`ai-specs/changes/SCRUM-10_backend.md`** para un ejemplo completo de cómo se ve un plan de implementación de funcionalidad. Este plan integral incluye:
 
-- **Architecture Context**: Layers, components, and dependencies
-- **Step-by-Step Instructions**: Validation → Service → Controller → Routes → Tests → Documentation
-- **Complete Code Examples**: Full implementations for each layer
-- **Comprehensive Test Specifications**: 90%+ coverage requirements with example tests
-- **Error Handling**: HTTP status codes, error messages, and response formats
-- **Business Rules**: Validation requirements and constraints
-- **Testing Checklist**: Unit, manual, integration, and regression tests
+- **Contexto de Arquitectura**: Capas, componentes y dependencias
+- **Instrucciones Paso a Paso**: Validación → Servicio → Controlador → Rutas → Pruebas → Documentación
+- **Ejemplos de Código Completos**: Implementaciones completas para cada capa
+- **Especificaciones de Pruebas Exhaustivas**: Requisitos de cobertura de 90%+ con ejemplos de pruebas
+- **Manejo de Errores**: Códigos de estado HTTP, mensajes de error y formatos de respuesta
+- **Reglas de Negocio**: Requisitos y restricciones de validación
+- **Lista de Verificación de Pruebas**: Pruebas unitarias, manuales, de integración y de regresión
 
-This plan demonstrates how detailed and actionable the generated plans are, enabling autonomous implementation by AI agents.
+Este plan demuestra cuán detallados y accionables son los planes generados, permitiendo implementación autónoma por agentes de IA.
 
-## 📖 Core Development Rules
+## 📖 Reglas Centrales de Desarrollo
 
-All development follows principles defined in `ai-specs/specs/base-standards.mdc`:
+Todo el desarrollo sigue principios definidos en `ai-specs/specs/base-standards.mdc`:
 
-### Key Principles
+### Principios Clave
 
-1. **Small Tasks, One at a Time**: Baby steps, never skip ahead
-2. **Test-Driven Development (TDD)**: Write failing tests first
-3. **Type Safety**: Fully typed code (TypeScript)
-4. **Clear Naming**: Descriptive variables and functions
-5. **English Only**: All code, comments, documentation, and messages in English
-6. **90%+ Test Coverage**: Comprehensive testing across all layers
-7. **Incremental Changes**: Focused, reviewable modifications
+1. **Tareas Pequeñas, Una a la Vez**: Pasos de bebé, nunca adelantarse
+2. **Desarrollo Guiado por Pruebas (TDD)**: Escribir pruebas que fallan primero
+3. **Seguridad de Tipos**: Código completamente tipado (TypeScript)
+4. **Nomenclatura Clara**: Variables y funciones descriptivas
+5. **Idioma del código**: Todo el código y nombres de archivos, clases, funciones y variables en **inglés**
+5. **Idioma de archivos `.mdc` y `.md`, comentarios y comunicación humana**: Todos los comentarios, documentación y mensajes en **español**
+6. **Cobertura de Pruebas de 90%+**: Pruebas exhaustivas en todas las capas
+7. **Cambios Incrementales**: Modificaciones enfocadas y revisables
 
-### Specific Standards
+### Estándares Específicos
 
-- **Backend Standards**: `ai-specs/specs/backend-standards.mdc`
-  - API development patterns
-  - Database best practices
-  - Security guidelines
-  - Testing requirements
+- **Estándares de Backend**: `ai-specs/specs/backend-standards.mdc`
+  - Patrones de desarrollo de API
+  - Mejores prácticas de base de datos
+  - Directrices de seguridad
+  - Requisitos de pruebas
 
-- **Frontend Standards**: `ai-specs/specs/frontend-standards.mdc`
-  - React component patterns
-  - UI/UX guidelines
-  - State management
-  - Component testing
+- **Estándares de Frontend**: `ai-specs/specs/frontend-standards.mdc`
+  - Patrones de componentes React
+  - Directrices de UI/UX
+  - Gestión de estado
+  - Pruebas de componentes
 
-- **Documentation Standards**: `ai-specs/specs/documentation-standards.mdc`
-  - Technical documentation structure
-  - API documentation (OpenAPI)
-  - Code documentation
-  - Maintenance guidelines
+- **Estándares de Documentación**: `ai-specs/specs/documentation-standards.mdc`
+  - Estructura de documentación técnica
+  - Documentación de API (OpenAPI)
+  - Documentación de código
+  - Directrices de mantenimiento
 
-## 🎯 Benefits
+## 🎯 Beneficios
 
-### For Developers
-- ✅ **Consistent Code Quality**: AI follows the same standards every time
-- ✅ **Comprehensive Testing**: Automatic 90%+ coverage across all layers
-- ✅ **Complete Documentation**: API specs updated automatically
-- ✅ **Faster Onboarding**: New team members reference the same rules
-- ✅ **Reduced Review Time**: Code follows established patterns
+### Para Desarrolladores
+- ✅ **Calidad de Código Consistente**: La IA sigue los mismos estándares cada vez
+- ✅ **Pruebas Exhaustivas**: Cobertura automática de 90%+ en todas las capas
+- ✅ **Documentación Completa**: Especificaciones de API actualizadas automáticamente
+- ✅ **Incorporación Más Rápida**: Los nuevos miembros del equipo referencian las mismas reglas
+- ✅ **Tiempo de Revisión Reducido**: El código sigue patrones establecidos
 
-### For Teams
-- ✅ **Copilot Flexibility**: Team members can use their preferred AI tool
-- ✅ **Knowledge Preservation**: Standards documented, not in people's heads
-- ✅ **Quality Consistency**: Same standards regardless of who (or what) writes code
-- ✅ **Easier Code Reviews**: Clear expectations and patterns
-- ✅ **Scalable Practices**: Standards scale with the team
+### Para Equipos
+- ✅ **Flexibilidad de Copilot**: Los miembros del equipo pueden usar su herramienta de IA preferida
+- ✅ **Preservación del Conocimiento**: Estándares documentados, no en las cabezas de las personas
+- ✅ **Consistencia de Calidad**: Mismos estándares independientemente de quién (o qué) escribe el código
+- ✅ **Revisiones de Código Más Fáciles**: Expectativas y patrones claros
+- ✅ **Prácticas Escalables**: Los estándares escalan con el equipo
 
-### For Projects
-- ✅ **Maintainable Codebase**: Clean architecture and clear separation of concerns
-- ✅ **Production-Ready Code**: TDD, error handling, and validation built-in
-- ✅ **Living Documentation**: API specs and data models always current
-- ✅ **Faster Feature Development**: Autonomous AI implementation from plans
-- ✅ **Lower Technical Debt**: Best practices enforced from day one
+### Para Proyectos
+- ✅ **Base de Código Mantenible**: Arquitectura limpia y clara separación de preocupaciones
+- ✅ **Código Listo para Producción**: TDD, manejo de errores y validación integrados
+- ✅ **Documentación Viva**: Especificaciones de API y modelos de datos siempre actuales
+- ✅ **Desarrollo de Funcionalidades Más Rápido**: Implementación autónoma de IA a partir de planes
+- ✅ **Menor Deuda Técnica**: Mejores prácticas aplicadas desde el día uno
 
-## 🔧 Customization
+## 🔧 Personalización
 
-### Adapting to Your Project
+### Adaptando a Tu Proyecto
 
-1. **Update `base-standards.mdc`**: Modify core principles to match your needs
-2. **Add Domain Rules**: Include project-specific business rules
-3. **Extend Standards**: Add technology-specific guidelines (Vue, Angular, etc.)
-4. **Create Templates**: Add prompt templates in `prompts.md`
-5. **Link Resources**: Reference your project's specific documentation
+1. **Actualizar `base-standards.mdc`**: Modifica principios centrales para ajustarse a tus necesidades
+2. **Añadir Reglas de Dominio**: Incluye reglas de negocio específicas del proyecto
+3. **Extender Estándares**: Añade directrices específicas de tecnología (Vue, Angular, etc.)
+4. **Crear Plantillas**: Añade plantillas de prompts en `prompts.md`
+5. **Vincular Recursos**: Referencia la documentación específica de tu proyecto
 
-### Maintaining Standards
+### Manteniendo Estándares
 
-- **Single Source of Truth**: Always update `base-standards.mdc` first
-- **Version Control**: Track changes to standards like code
-- **Team Review**: Standards changes should be reviewed like pull requests
-- **Documentation**: Keep examples current with actual implementation
+- **Fuente Única de Verdad**: Siempre actualiza `base-standards.mdc` primero
+- **Control de Versiones**: Rastrea cambios a los estándares como código
+- **Revisión del Equipo**: Los cambios a los estándares deben ser revisados como pull requests
+- **Documentación**: Mantén los ejemplos actuales con la implementación real
 
-## 📚 Technical context
+## 📚 Contexto Técnico
 
-### Reference Examples (from LIDR Project)
+### Ejemplos de Referencia (del Proyecto LIDR)
 
-The following files are included as **reference examples** from the LIDR project. You should create your own versions tailored to your specific project:
+Los siguientes archivos están incluidos como **ejemplos de referencia** del proyecto LIDR. Debes crear tus propias versiones adaptadas a tu proyecto específico:
 
-- **API Specification**: `ai-specs/specs/api-spec.yml` (OpenAPI 3.0 format)
-  - *Create your own API spec documenting your project's endpoints*
-- **Data Models**: `ai-specs/specs/data-model.md` (Database schemas, domain models)
-  - *Document your database structure and domain entities*
-- **Development Guide**: `ai-specs/specs/development_guide.md` (Setup, workflows)
-  - *Write setup instructions specific to your tech stack*
+- **Especificación de API**: `ai-specs/specs/api-spec.yml` (formato OpenAPI 3.0)
+  - *Crea tu propia especificación de API documentando los endpoints de tu proyecto*
+- **Modelos de Datos**: `ai-specs/specs/data-model.md` (Esquemas de base de datos, modelos de dominio)
+  - *Documenta tu estructura de base de datos y entidades de dominio*
+- **Guía de Desarrollo**: `ai-specs/specs/development_guide.md` (Configuración, flujos de trabajo)
+  - *Escribe instrucciones de configuración específicas para tu stack tecnológico*
 
 
-## 🤝 Contributing
+## 🤝 Contribuir
 
-When contributing to the standards:
+Al contribuir a los estándares:
 
-1. Update `base-standards.mdc` (single source of truth)
-2. Test with multiple AI copilots to ensure compatibility
-3. Update examples in `changes/` folder if needed
-4. Document breaking changes clearly
-5. Follow the same standards you're defining!
+1. Actualiza `base-standards.mdc` (fuente única de verdad)
+2. Prueba con múltiples copilots de IA para asegurar compatibilidad
+3. Actualiza ejemplos en la carpeta `changes/` si es necesario
+4. Documenta los cambios disruptivos claramente
+5. ¡Sigue los mismos estándares que estás definiendo!
 
-## 📄 License
+## 📄 Licencia
 
 Copyright (c) 2025 LIDR.co
-Licensed under the MIT License
+Licenciado bajo la Licencia MIT
 
 **English:**
 
